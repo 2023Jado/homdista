@@ -1,4 +1,4 @@
-homrdistance <- function(file, formattime, tz, groupid, perc, unarea){
+homdista <- function(file, formattime, tz, groupid, perc, unarea){
 
   # List of packages
   packages <- c("sp", "sf", "ade4", "adehabitatMA",
@@ -199,7 +199,8 @@ homrdistance <- function(file, formattime, tz, groupid, perc, unarea){
   # Remove the "[m]" suffix from the "Distance_km" column
   traveled_distances_df$Distance_km <- gsub("\\s*\\[m\\]", "", traveled_distances_df$Distance_km)
 
-  # Bind the homerange and distance columns
+  # ##################### Merge the homerange and distance columns #############################################
+
   merged_distance_homerange <- merge(traveled_distances_df, home2, by="Code")
 
   # Splitting the Code column into three separate columns
@@ -213,24 +214,22 @@ homrdistance <- function(file, formattime, tz, groupid, perc, unarea){
 
   # ###################### Plot a home range map ####################################
 
-  # Define color palette
-  colors <- rainbow(length(unique(home$Code)))
+  # Create mapview for each homerange separately
 
-  # Create mapview
-  map <- mapview(home3_sp, col.regions = "transparent", alpha.regions = 0,
-                 col = colors[match(home3_sp$Id, unique(home3_sp$Id))],
-                 fill = TRUE, lwd = 2)
-
-  # Add legend
-  map_legend <- lapply(unique(home3_sp$Id), function(code) {
-    col <- colors[match(code, unique(home3_sp$Id))]
-    legendEntry(paste("Home range ", code), col = col)
+  homeranges <- lapply(unique(home$Code), function(code) {
+    mapview(home[home$Code == code, ],
+            col.regions = "transparent",
+            col = rainbow(length(unique(home$Code))),
+            layer.name = code,
+            alpha.regions = 0,
+            legend.opacity = 1,
+            alpha = 1,
+            lwd = 2
+    )
   })
-  map <- map + addLegend(map_legend, at = NULL, position = "topright")
 
-  # Show map
-  map
-
+  # Show all the homeranges' polygons
+  homeranges
 
   return(final_file)
 }
