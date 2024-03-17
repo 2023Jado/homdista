@@ -1,11 +1,8 @@
-hodicor <- function(method=cormethod, conf.level=ci, facets = facetcor){
-  # Convert columns to numeric
-  final_file$Distance_km <- as.numeric(final_file$Distance_km)
-  final_file$Area_km2 <- as.numeric(final_file$Area_km2)
+hodicor <- function(cormethod){
 
-  # Correlation
-  correlation_dist_homer <- cor.test(as.numeric(final_file$Distance_km), as.numeric(final_file$Area_km2), method = "cormethod",
-                                     conf.level = ci)
+    # Correlation
+  correlation_dist_homer <- cor.test(as.numeric(final_file$Distance_km), as.numeric(final_file$Area_km2), method = cormethod,
+                                     conf.level = 0.95)
 
   # Create a scatter plot with a fitted line
 
@@ -14,10 +11,14 @@ hodicor <- function(method=cormethod, conf.level=ci, facets = facetcor){
   final_file$Year <- factor(final_file$Year)
 
   # Create the scatter plot
-  qplot(x = Distance_km, y = Area_km2, facets = ~facetcor, col= Id, data = final_file) +
+  corplot <- qplot(x = Distance_km, y = Area_km2, col= Id, data = final_file) +
     geom_smooth(method = "lm") + xlab("Distance [km]") +
     ylab("Area [km2]") + xlim(min(final_file$Distance_km), max(final_file$Distance_km)) +
-    ylim(min(final_file$Area_km2), max(final_file$Area_km2))
+    ylim(min(final_file$Area_km2), max(final_file$Area_km2)) + guides(col = guide_legend(title = NULL))
+
+  plot(corplot)
 
   return(correlation_dist_homer)
 }
+
+

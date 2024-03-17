@@ -1,66 +1,35 @@
-#' Title
-#'
-#' @param file
-#' @param tf
-#' @param x
-#' @param y
-#' @param crs_epsg
-#' @param groupid
-#' @param perc
-#'
-#' @return
-#' @export
-#'
-#' @examples
-homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
+file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
+tf <- "%m/%d/%y %H:%M"
+crs_epsg <- 32734
+groupid <- file$Animal
+perc <- 95
 
-  # List of packages
-  packages <- c("sp", "sf", "ade4", "adehabitatMA",
-                "CircStats", "adehabitatLT", "adehabitatHR", "move",
-                "lubridate", "amt", "ggplot2", "bcpa", "scales", "mapview",
-                "circular", "basemaps", "raster", "tidyr")
 
-  # Function to install and load packages
-  install_load_packages <- function(packages) {
 
-    # Check if packages are not installed
-    to_be_install <- setdiff(packages, rownames(installed.packages()))
 
-    if (length(to_be_install) > 0) {
 
-      # Install missing packages
-      install.packages(to_be_install)
-    }
+library(sp)
+library(sf)
+library(ade4)
+library(adehabitatMA)
+library(CircStats)
+library(adehabitatLT)
+library(adehabitatHR)
+library(move)
+library(lubridate)
+library(amt)
+library(ggplot2)
+library(scales)
+library(mapview)
+library(circular)
+library(basemaps)
+library(raster)
+library(tidyr)
 
-    # Load packages
-    lapply(packages, require, character.only = TRUE)
-  }
+# Read the csv data
 
-  # Install and load packages
-  install_load_packages(packages)
-
-  library(sp)
-  library(sf)
-  library(ade4)
-  library(adehabitatMA)
-  library(CircStats)
-  library(adehabitatLT)
-  library(adehabitatHR)
-  library(move)
-  library(lubridate)
-  library(amt)
-  library(ggplot2)
-  library(scales)
-  library(mapview)
-  library(circular)
-  library(basemaps)
-  library(raster)
-  library(tidyr)
-
-  # Read the csv data
-
+hom <- function(file, tf, crs_epsg, groupid, perc){
   data_df <- file
-
   # Change the time format
   data_df$time <- as.POSIXct(data_df$timestamp, format = tf, tz="UTC")
 
@@ -80,28 +49,28 @@ homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
   # Create a "code name" column to be used for home range estimation
   no_na_data_unique$Month_code <- month(no_na_data_unique$time)
   no_na_data_unique$Year_code <- year(no_na_data_unique$time)
-  no_na_data_unique$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$groupid)
+  no_na_data_unique$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$Animal)
 
   # Create move object with sorted dataset
   df_move <- move(
     x = no_na_data_unique$x,
     y = no_na_data_unique$y,
-    time = as.POSIXct(no_na_data_unique$time, format = "formattime", tz = "tz"),
+    time = as.POSIXct(no_na_data_unique$time, format = "%m/%d/%y %H:%M", tz = "UTC"),
     data = no_na_data_unique,
-    Id = na_na_data_unique$groupid,
+    Id = na_na_data_unique$Animal,
     group = no_na_data_unique$Code,
-    crs = crs_epsg
+    crs = 32734
   )
 
   # Assign the projection to the move object
-  epsg_code <- crs_epsg
-  crs <- CRS(paste0("+init=epsg:", epsg_code))
+  epsg_code <- 32734
+  crs <- CRS(paste0("+init=epsg:", 32734))
   proj4string(df_move) <- crs
 
   ############################ Calculations of home range ##################################################
 
   # Calculate the bandwidth parameter from the move object using "amt package"
-  df_move_track <- amt::make_track(df_move, x, y, time, crs=crs_epsg)
+  df_move_track <- amt::make_track(df_move, x, y, time, crs=32734)
   parh <- as.numeric(amt::hr_kde_ref(df_move_track)[1])
 
   # Initialize a list to store KDE results for each unique name
@@ -132,7 +101,7 @@ homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
 
     # Extract vertices accounting for a certain percentage of the kernel density in an area unit
     code_name <- tryCatch({
-      getverticeshr(kde, percent = perc, unout = "km2")
+      getverticeshr(kde, percent = 95, unout = "km2")
     }, error = function(e) {
       return(NULL)  # Return NULL if calculation fails
     })
@@ -173,7 +142,7 @@ homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
   # Prepare the layer to be used
 
   coordinates <- df_move[, c("x", "y")]
-  coordinates_sf <- st_as_sf(coordinates, crs=crs_epsg)
+  coordinates_sf <- st_as_sf(coordinates, crs=32734)
   df_move_df <- coordinates_sf #only changed the name of the layer
   df_move_df$time <- df_move$time
   df_move_df$Code <- df_move$Code
@@ -227,5 +196,10 @@ homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
   final_file <- merged_distance_homerange_split
 
 
-  return(final_file)
+return(final_file)
+
 }
+
+
+
+

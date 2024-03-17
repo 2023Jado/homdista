@@ -1,16 +1,24 @@
-distwalk <- function(){
+#' Title
+#'
+#' @param distamove
+#'
+#' @return
+#' @export
+#'
+#' @examples
+distwalk <- function(distamove){
 
   # Merge the computed distances with the spatial data based on the 'Code' column
-  df_move_with_distances <- merge(df_move_sorted, traveled_distances_df, by = "Code")
+  distamove <- merge(df_move_sorted, traveled_distances_df, by = "Code")
 
   # Initialize an empty list to store paths and associated code name
   lines_list <- list()
   codes <- character(0)
 
   # Loop through each code name
-  for (code in unique(df_move_with_distances$Code)) {
+  for (code in unique(distamove$Code)) {
 
-    group_df <- df_move_with_distances[df_move_with_distances$Code == code, ]
+    group_df <- distamove[distamove$Code == code, ]
     if (nrow(group_df) > 1) {
       line <- st_cast(st_union(st_cast(group_df, "MULTIPOINT")), "LINESTRING")
       lines_list[[code]] <- line
@@ -28,7 +36,9 @@ distwalk <- function(){
   # Convert to sf object
   Movement <- st_as_sf(lines_df)
 
-  mapview(Movement)
+  print(Movement)
 
   return(Movement)
 }
+
+

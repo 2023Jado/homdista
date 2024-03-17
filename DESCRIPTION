@@ -1,12 +1,15 @@
 Package: homdista
-Title: What the Package Does (One Line, Title Case)
+Title: Home range utilization and animal traveled distance
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Jean de Dieu", "Tuyizere", , "tuyizjado1994.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9516-9615"))
+Description: Kernel density home range size estimation and distance walked within a certain time (monthly or yearly).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
