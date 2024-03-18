@@ -1,25 +1,30 @@
-# Read the file
+example <- function(){
 
-file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
+  # Read the file
 
-# Define some parameters
+  file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
 
-tf <- "%m/%d/%y %H:%M"
-Id_name <- "Animal"
-crs_epsg <- 32734
-perc <- 95
+  # Define some parameters
 
-library(homdista)
+  tf <- "%m/%d/%y %H:%M"
+  Id_name <- "Animal"
+  crs_epsg <- 32734
+  perc <- 95
 
-# Compute the area utilized and distance traveled by elephant with "homdista"
-area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
+  library(homdista)
 
-# Home range spatial polygons "homkde"
-homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
+  # Compute the area utilized and distance traveled by elephant with "homdista"
+  area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
 
-# Check the correlation between area used and traveled distance
-corr_home_distance <- homdista::hodicor(area_distance, "spearman")
+  # Home range spatial polygons "homkde"
+  homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
 
-# Spatial lines (paths) showing traveled distance
-distance_paths <- homdista::distwalk(file, tf, crs_epsg, Id_name)
-mapview(distance_paths)
+  # Check the correlation between area used and traveled distance using "spearman method"
+  corr_home_distance <- homdista::hodicor(area_distance, "spearman")
+
+  # Spatial lines (paths) showing traveled distance
+  distance_paths <- homdista::distwalk(file, tf, crs_epsg, Id_name)
+  mapview(distance_paths)
+
+
+}

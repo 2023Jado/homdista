@@ -6,7 +6,7 @@
 #' @return correlation_dist_homer
 #' @export
 #'
-#' @examples hodicor
+#' @examples example
 hodicor <- function(adista, cormethod){
 
   # Re-read the file name returned from homdista

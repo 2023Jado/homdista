@@ -10,7 +10,7 @@
 #' @return final_file
 #' @export
 #'
-#' @examples homdista
+#' @examples example
 homdista <- function(file, tf, crs_epsg, Id_name, perc){
 
   # List of packages
