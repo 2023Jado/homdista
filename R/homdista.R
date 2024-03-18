@@ -1,5 +1,5 @@
 #' Estimation of kde habitat utilization area and traveled distance
-#'k
+#'
 #' @param file data frame already read in R and has at least three columns named as follows
 #' longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case)
 #' @param tf timestamp format

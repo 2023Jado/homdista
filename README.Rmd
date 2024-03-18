@@ -22,11 +22,10 @@ The goal of homdista is to ...
 
 ## Installation
 
-You can install the development version of homdista from [GitHub](https://github.com/) with:
+You can install the development version of homdista like so:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("2023Jado/homdista")
+# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
 
 ## Example
