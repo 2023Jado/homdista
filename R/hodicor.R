@@ -13,6 +13,10 @@ hodicor <- function(adista, cormethod){
 
   final_file <- adista
 
+  # Change the columns of area and distance as numeric
+  final_file$Distance_km <- as.numeric(final_file$Distance_km)
+  final_file$Area_km2 <- as.numeric(final_file$Area_km2)
+
     # Correlation
   correlation_dist_homer <- cor.test(as.numeric(final_file$Distance_km), as.numeric(final_file$Area_km2), method = cormethod,
                                      conf.level = 0.95)

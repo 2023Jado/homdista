@@ -229,6 +229,5 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc){
   # Final file ready for correlation analysis
   final_file <- merged_distance_homerange_split
 
-
   return(final_file)
 }

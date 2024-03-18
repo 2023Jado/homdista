@@ -4,4 +4,3 @@ Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95
 
-
