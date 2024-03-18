@@ -1,18 +1,17 @@
-#' Title
+#' Estimation of kde habitat utilization area and traveled distance
 #'
-#' @param file
-#' @param tf
-#' @param x
-#' @param y
-#' @param crs_epsg
-#' @param groupid
-#' @param perc
+#' @param file data frame already read in R and has at least three columns named as follows
+#' longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case)
+#' @param tf timestamp format
+#' @param crs_epsg the epsg code related to the dataset coordinates
+#' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
+#' @param perc Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50% for core areas, 75%, 90%, 95%, ...)
 #'
-#' @return
+#' @return final_file
 #' @export
 #'
-#' @examples
-homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
+#' @examples homdista
+homdista <- function(file, tf, crs_epsg, Id_name, perc){
 
   # List of packages
   packages <- c("sp", "sf", "ade4", "adehabitatMA",
@@ -21,6 +20,7 @@ homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
                 "circular", "basemaps", "raster", "tidyr")
 
   # Function to install and load packages
+
   install_load_packages <- function(packages) {
 
     # Check if packages are not installed
@@ -61,7 +61,10 @@ homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
 
   data_df <- file
 
-  # Change the time format
+  # Rename the column
+  names(data_df)[which(names(data_df) == "Id_name")] <- "groupid"
+
+   # Change the time format
   data_df$time <- as.POSIXct(data_df$timestamp, format = tf, tz="UTC")
 
   # Remove the NA from data_df
@@ -86,7 +89,7 @@ homdista <- function(file, tf, x, y, crs_epsg, groupid, perc){
   df_move <- move(
     x = no_na_data_unique$x,
     y = no_na_data_unique$y,
-    time = as.POSIXct(no_na_data_unique$time, format = "formattime", tz = "tz"),
+    time = as.POSIXct(no_na_data_unique$time, format = tf, tz = "UTC"),
     data = no_na_data_unique,
     Id = na_na_data_unique$groupid,
     group = no_na_data_unique$Code,

@@ -1,4 +1,17 @@
-hodicor <- function(cormethod){
+#' Correlation between the area utilized and traveled distance
+#'
+#' @param adista a layer containing the area and distances values generated from the homdista function
+#' @param cormethod correlation method between paired samples (pearson", "kendall", or "spearman")
+#'
+#' @return correlation_dist_homer
+#' @export
+#'
+#' @examples hodicor
+hodicor <- function(adista, cormethod){
+
+  # Re-read the file name returned from homdista
+
+  final_file <- adista
 
     # Correlation
   correlation_dist_homer <- cor.test(as.numeric(final_file$Distance_km), as.numeric(final_file$Area_km2), method = cormethod,

@@ -2,13 +2,28 @@
 % Please edit documentation in R/homdista.R
 \name{homdista}
 \alias{homdista}
-\title{Title}
+\title{Estimation of kde habitat utilization area and traveled distance}
 \usage{
-homdista(file, tf, x, y, crs_epsg, groupid, perc)
+homdista(file, tf, crs_epsg, Id_name, perc)
 }
 \arguments{
-\item{perc}{}
+\item{file}{data frame already read in R and has at least three columns named as follows
+longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case)}
+
+\item{tf}{timestamp format}
+
+\item{crs_epsg}{the epsg code related to the dataset coordinates}
+
+\item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
+
+\item{perc}{Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50\% for core areas, 75\%, 90\%, 95\%, ...)}
+}
+\value{
+final_file
 }
 \description{
-Title
+Estimation of kde habitat utilization area and traveled distance
+}
+\examples{
+homdista
 }
