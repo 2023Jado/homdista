@@ -15,7 +15,7 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
   data_df <- file
 
   # Rename the column
-  names(data_df)[which(names(data_df) == "Id_name")] <- "groupid"
+  names(data_df)[which(names(data_df) == Id_name)] <- "groupid"
 
   # Change the time format
   data_df$time <- as.POSIXct(data_df$timestamp, format = tf, tz="UTC")
