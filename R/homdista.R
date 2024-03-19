@@ -1,7 +1,8 @@
 #' Estimation of kde habitat utilization area and traveled distance
 #'
-#' @param file data frame already read in R and has at least three columns named as follows
-#' longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case)
+#' @param file data frame already read in R and has at least the following three columns
+#' longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case).
+#' The function use amt package for determining the minimum bandwidth to be used for estimating the home range area.
 #' @param tf timestamp format
 #' @param crs_epsg the epsg code related to the dataset coordinates
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
@@ -11,7 +12,22 @@
 #' @export
 #'
 #' @examples example
+#' example <- function(){
+#' # Read the file
+#' file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
 #'
+#' # Define some parameters}
+#'
+#'tf <- "%m/%d/%y %H:%M"
+#'Id_name <- "Animal"
+#'crs_epsg <- 32734
+#'perc <- 95
+#'
+#'library(homdista)
+#'
+#'# Compute the area utilized and distance traveled by elephant with "homdista"
+#'
+#'area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
 #'
 homdista <- function(file, tf, crs_epsg, Id_name, perc){
 
