@@ -18,5 +18,6 @@ correlation_dist_homer
 Correlation between the area utilized and traveled distance
 }
 \examples{
-hodicor
+example
+
 }

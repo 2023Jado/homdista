@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples example
+#'
 homekde <- function(file, tf, crs_epsg, Id_name, perc){
   data_df <- file
 

@@ -7,6 +7,7 @@
 #' @export
 #'
 #' @examples example
+#'
 hodicor <- function(adista, cormethod){
 
   # Re-read the file name returned from homdista

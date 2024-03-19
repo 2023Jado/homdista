@@ -25,5 +25,7 @@ final_file
 Estimation of kde habitat utilization area and traveled distance
 }
 \examples{
-homdista
+example
+
+
 }

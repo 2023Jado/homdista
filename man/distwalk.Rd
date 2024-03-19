@@ -23,5 +23,6 @@ movement
 Traveled distance
 }
 \examples{
-distwalk
+example
+
 }

@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples example
+#'
 distwalk <- function(file, tf, crs_epsg, Id_name){
 
   data_df <- file

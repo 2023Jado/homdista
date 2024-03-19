@@ -24,5 +24,6 @@ homeshape
 Home range spatial polygons
 }
 \examples{
-homekde
+example
+
 }
