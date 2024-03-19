@@ -6,24 +6,20 @@
 #' @return correlation_dist_homer
 #' @export
 #'
-#' @examples example
-#' example <- function(){
-#'  # Read the file
+#' @examples
 #'  file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
-#'
 #'  # Define some parameters
 #'  tf <- "%m/%d/%y %H:%M"
 #'  Id_name <- "Animal"
 #'  crs_epsg <- 32734
 #'  perc <- 95
-#'
 #'  library(homdista)
 #'
 #'  # Compute the area utilized and distance traveled by elephant with "homdista"
 #'  area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
 #'
 #'  # Check the correlation between area used and traveled distance using "spearman method"
-#'  corr_home_distance <- homdista::hodicor(area_distance, "spearman")}
+#'  corr_home_distance <- homdista::hodicor(area_distance, "spearman")
 #'
 #'
 #'

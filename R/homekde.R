@@ -9,13 +9,9 @@
 #' @return homeshape
 #' @export
 #'
-#' @examples example
-#' example <- function(){
-#' # Read the file
+#' @examples
 #' file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
-#'
 #' # Define some parameters
-#'
 #' tf <- "%m/%d/%y %H:%M"
 #' Id_name <- "Animal"
 #' crs_epsg <- 32734
@@ -24,7 +20,6 @@
 #' library(homdista)
 #' # Home range spatial polygons "homkde"
 #' homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
-#' }
 #'
 homekde <- function(file, tf, crs_epsg, Id_name, perc){
   data_df <- file

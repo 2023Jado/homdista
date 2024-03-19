@@ -9,10 +9,7 @@
 #' @return movement
 #' @export
 #'
-#' @examples example
-#'
-#' example <- function(){
-#' # Read the file
+#' @examples
 #' file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
 #'
 #' # Define some parameters
@@ -26,7 +23,7 @@
 #'
 #' # Spatial lines (paths) showing traveled distance
 #' distance_paths <- homdista::distwalk(file, tf, crs_epsg, Id_name)
-#' mapview(distance_paths)}
+#' mapview(distance_paths)
 #'
 distwalk <- function(file, tf, crs_epsg, Id_name){
 

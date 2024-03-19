@@ -26,5 +26,4 @@ example <- function(){
   distance_paths <- homdista::distwalk(file, tf, crs_epsg, Id_name)
   mapview(distance_paths)
 
-
 }

@@ -7,8 +7,8 @@
 homdista(file, tf, crs_epsg, Id_name, perc)
 }
 \arguments{
-\item{file}{data frame already read in R and has at least three columns named as follows
-longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case)}
+\item{file}{data frame already read in R and has at least the following three columns:
+longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case), the function use amt package for determining the minimum bandwidth to be used for estimating the home range area.}
 
 \item{tf}{timestamp format}
 
@@ -25,7 +25,14 @@ final_file
 Estimation of kde habitat utilization area and traveled distance
 }
 \examples{
-example
-
+file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
+# Define some parameters
+tf <- "\%m/\%d/\%y \%H:\%M"
+Id_name <- "Animal"
+crs_epsg <- 32734
+perc <- 95
+library(homdista)
+# Compute the area utilized and distance traveled by elephant with "homdista"
+area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
 
 }
