@@ -1,4 +1,5 @@
-# Read the file
+example <- function(){
+  # Read the file
 
 file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
 
@@ -23,5 +24,5 @@ corr_home_distance <- homdista::hodicor(area_distance, "spearman")
 # Spatial lines (paths) showing traveled distance
 distance_paths <- homdista::distwalk(file, tf, crs_epsg, Id_name)
 mapview(distance_paths)
-
+}
 

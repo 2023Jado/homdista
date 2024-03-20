@@ -26,7 +26,7 @@ Correlation between the area utilized and traveled distance
  perc <- 95
  library(homdista)
 
- # Compute the area utilized and distance traveled by elephant with "homdista"
+ # Compute the area utilized and distance traveled by elephant
  area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
 
  # Check the correlation between area used and traveled distance using "spearman method"

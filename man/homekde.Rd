@@ -32,7 +32,7 @@ crs_epsg <- 32734
 perc <- 95
 
 library(homdista)
-# Home range spatial polygons "homkde"
+# Home range spatial polygons
 homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
 
 }
