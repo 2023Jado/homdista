@@ -64,36 +64,30 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Get unique names from df_move$Code
   unique_names <- unique(df_move$Code)
 
-  # Initialize a list to store KDE results for each unique name
+  # Initialize an empty list to store KDE results
   kde_list <- list()
 
-  # Initialize an empty dataframe to store data with at least 5 relocations
-  df_move_filtered <- data.frame()
-
   # Loop through each unique "code name"
-  for (name in unique_names) {
+  for (name in unique(df_move$Code)) {
 
-    # Subset the data for the current name
+    # Subset the data for the current code name
     subset_data <- df_move[df_move$Code == name, ]
 
     # Check the number of relocations
     num_relocations <- nrow(subset_data)
 
-    # Check if the number of relocations is less than 5
-    if (num_relocations < 5) {
-      # If fewer than 5 relocations, skip this subset
-      next
+    # Proceed if there are at least 5 relocations
+    if (num_relocations >= 5) {
+
+      # Calculate kernel UD
+      kde <- kernelUD(as(subset_data, "SpatialPoints"), h = parh)
+      kde_list[[name]] <- kde
+    } else {
+      cat("Deleting KDE result for", name, "due to fewer than 5 relocations.\n")
+
+      # Delete this subset from the list
+      kde_list[[name]] <- NULL
     }
-
-    # Append data to filtered dataframe
-    df_move_filtered <- rbind(df_move_filtered, subset_data)
-
-    # Convert subset_data to SpatialPointsDataFrame
-    subset_sp <- as(subset_data, "Spatial")
-
-    # Calculate kernel UD
-    kde <- kernelUD(subset_sp, h = parh)
-    kde_list[[name]] <- kde
   }
 
   # Get the vertices

@@ -144,7 +144,6 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
   # Convert to sf object
   movement <- st_as_sf(lines_df)
 
-
   return(movement)
 }
 
