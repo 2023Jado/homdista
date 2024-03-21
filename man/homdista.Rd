@@ -21,7 +21,7 @@ longitude column named as "x", latitude column named as "y", and timestamp named
 \item{parh}{bandwidth or smoothing parameter}
 }
 \value{
-final_file
+home range area in km2 and traveled distance in km
 }
 \description{
 Estimation of kde habitat utilization area and traveled distance

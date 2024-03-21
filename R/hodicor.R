@@ -3,7 +3,7 @@
 #' @param adista a layer containing the area and distances values generated from the homdista function
 #' @param cormethod correlation method between paired samples (pearson", "kendall", or "spearman")
 #'
-#' @return correlation_dist_homer
+#' @return correlation values
 #' @export
 #'
 #' @examples
@@ -46,10 +46,10 @@ hodicor <- function(adista, cormethod){
   final_file$Year <- factor(final_file$Year)
 
   # Create the scatter plot
-  corplot <- qplot(x = Distance_km, y = Area_km2, col= Id, data = final_file) +
+  corplot <- qplot(x = Distance_km, y = Area_km2, data = final_file) +
     geom_smooth(method = "lm") + xlab("Distance [km]") +
     ylab("Area [km2]") + xlim(min(final_file$Distance_km), max(final_file$Distance_km)) +
-    ylim(min(final_file$Area_km2), max(final_file$Area_km2)) + guides(col = guide_legend(title = NULL))
+    ylim(min(final_file$Area_km2), max(final_file$Area_km2))
 
   plot(corplot)
 

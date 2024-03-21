@@ -7,7 +7,7 @@
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
 #' @param perc Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50% for core areas, 75%, 90%, 95%, ...)
 #' @param parh bandwidth or smoothing parameter
-#' @return final_file
+#' @return home range area in km2 and traveled distance in km
 #' @export
 #'
 #' @examples
@@ -28,9 +28,9 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
   # List of packages
   packages <- c("sp", "sf", "ade4", "adehabitatMA",
-                "CircStats", "adehabitatLT", "adehabitatHR", "move",
-                "lubridate", "amt", "ggplot2", "bcpa", "scales", "mapview",
-                "circular", "basemaps", "raster", "tidyr")
+                "CircStats", "adehabitatLT", "adehabitatHR",
+                "lubridate", "ggplot2", "scales", "mapview",
+                "circular", "basemaps", "tidyr")
 
   # Function to install and load packages
 
@@ -59,15 +59,12 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   library(CircStats)
   library(adehabitatLT)
   library(adehabitatHR)
-  library(move)
   library(lubridate)
-  library(amt)
   library(ggplot2)
   library(scales)
   library(mapview)
   library(circular)
   library(basemaps)
-  library(raster)
   library(tidyr)
 
   # Read the csv data
@@ -86,45 +83,20 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Sort the dataset based on the timestamp column
   no_na_df_sorted <- data_df_no_na[order(data_df_no_na$time), ]
 
-  # Identify duplicate timestamps
-  duplicate_indices <- duplicated(no_na_df_sorted$time) | #If I don't do this, why do I get the error that dataset includes double timestamps?
-    duplicated(no_na_df_sorted$time, fromLast = TRUE)     #I loose many rows if I apply this (however, it is the only option I have so far)
-
-  # Remove duplicate timestamps
-  no_na_data_unique <- no_na_df_sorted[!duplicate_indices, ]
-
   # Create a "code name" column to be used for home range estimation
-  no_na_data_unique$Month_code <- month(no_na_data_unique$time)
-  no_na_data_unique$Year_code <- year(no_na_data_unique$time)
-  no_na_data_unique$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$groupid)
+  no_na_df_sorted$Month_code <- month(no_na_data_unique$time)
+  no_na_df_sorted$Year_code <- year(no_na_data_unique$time)
+  no_na_df_sorted$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$groupid)
 
-  # Create move object with sorted dataset
-  df_move <- move(
-    x = no_na_data_unique$x,
-    y = no_na_data_unique$y,
-    time = as.POSIXct(no_na_data_unique$time, format = tf, tz = "UTC"),
-    data = no_na_data_unique,
-    Id = na_na_data_unique$groupid,
-    group = no_na_data_unique$Code,
-    crs = crs_epsg
-  )
+  # Change the data frame to "sf" object
+  df_move <- st_as_sf(no_na_data_unique, coords = c("x", "y"), crs=crs_epsg)
 
-  # Assign the projection to the move object
-  epsg_code <- crs_epsg
-  crs <- CRS(paste0("+init=epsg:", epsg_code))
-  proj4string(df_move) <- crs
-
-  ############################ Calculations of home range ##################################################
-
-  # Calculate the bandwidth parameter from the move object using "amt package"
-  # df_move_track <- amt::make_track(df_move, x, y, time, crs=crs_epsg)
-  # parh <- as.numeric(amt::hr_kde_ref(df_move_track)[1])
+   ############################ Calculations of home range ##################################################
 
   # Initialize a list to store KDE results for each unique name
   kde_list <- list()
 
-  # Iterate over each unique name in the "Code" column
-  unique_names <- unique(df_move$Code)
+  # Loop through each unique "code name"
   for (name in unique_names) {
 
     # Subset the data for the current name
@@ -135,7 +107,11 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
     # Calculate KDE only if there are at least 5 relocations
     if (num_relocations >= 5) {
-      kde <- kernelUD(as(subset_data, "SpatialPoints"), h = parh)
+      # Convert subset_data to SpatialPointsDataFrame
+      subset_sp <- as(subset_data, "Spatial")
+
+      # Calculate kernel UD
+      kde <- kernelUD(subset_sp, h = parh)
       kde_list[[name]] <- kde
     } else {
       cat("Skipping kde calculation for", name, "due to fewer than 5 relocations.\n")
@@ -182,9 +158,6 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
     home <- do.call(rbind, vertices_list_filtered)
   }
 
-  # Assign the projection to the calculated homerange
-  proj4string(home) <- crs
-
   # Homerange as data frame
   home1 <- as.data.frame(home)
   home2 <- home1[, c("Code", "area")]
@@ -197,15 +170,13 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # #################### Compute traveled distance ####################
 
   # Prepare the layer to be used
+  df_move$x <- no_na_df_sorted$x
+  df_move$y <- no_na_df_sorted$y
+  df_move$time <- no_na_df_sorted$time
+  df_move$Code <- no_na_df_sorted$Code
 
-  coordinates <- df_move[, c("x", "y")]
-  coordinates_sf <- st_as_sf(coordinates, crs=crs_epsg)
-  df_move_df <- coordinates_sf #only changed the name of the layer
-  df_move_df$time <- df_move$time
-  df_move_df$Code <- df_move$Code
-
-  # Sort df_move_df by timestamp
-  df_move_sorted <- df_move_df[order(df_move$time), ]
+  # Sort df_move by timestamp
+  df_move_sorted <- df_move[order(df_move$time), ]
 
   # Check for unique values in the 'Code' column
   unique_codes <- unique(df_move_sorted$Code)

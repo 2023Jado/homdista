@@ -6,7 +6,7 @@
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
 #' @param perc Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50% for core areas, 75%, 90%, 95%, ...)
 #' @param parh bandwidth or smoothing parameter
-#' @return homeshape
+#' @return home range polygons
 #' @export
 #'
 #' @examples
@@ -24,6 +24,9 @@
 #' homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
 #'
 homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
+
+  # Read the csv data
+
   data_df <- file
 
   # Rename the column
@@ -38,45 +41,20 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Sort the dataset based on the timestamp column
   no_na_df_sorted <- data_df_no_na[order(data_df_no_na$time), ]
 
-  # Identify duplicate timestamps
-  duplicate_indices <- duplicated(no_na_df_sorted$time) | #If I don't do this, why do I get the error that dataset includes double timestamps?
-    duplicated(no_na_df_sorted$time, fromLast = TRUE)     #I loose many rows if I apply this (however, it is the only option I have so far)
-
-  # Remove duplicate timestamps
-  no_na_data_unique <- no_na_df_sorted[!duplicate_indices, ]
-
   # Create a "code name" column to be used for home range estimation
-  no_na_data_unique$Month_code <- month(no_na_data_unique$time)
-  no_na_data_unique$Year_code <- year(no_na_data_unique$time)
-  no_na_data_unique$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$groupid)
+  no_na_df_sorted$Month_code <- month(no_na_data_unique$time)
+  no_na_df_sorted$Year_code <- year(no_na_data_unique$time)
+  no_na_df_sorted$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$groupid)
 
-  # Create move object with sorted dataset
-  df_move <- move(
-    x = no_na_data_unique$x,
-    y = no_na_data_unique$y,
-    time = as.POSIXct(no_na_data_unique$time, format = tf, tz = "UTC"),
-    data = no_na_data_unique,
-    Id = na_na_data_unique$groupid,
-    group = no_na_data_unique$Code,
-    crs = crs_epsg
-  )
-
-  # Assign the projection to the move object
-  epsg_code <- crs_epsg
-  crs <- CRS(paste0("+init=epsg:", epsg_code))
-  proj4string(df_move) <- crs
+  # Change the data frame to "sf" object
+  df_move <- st_as_sf(no_na_data_unique, coords = c("x", "y"), crs=crs_epsg)
 
   ############################ Calculations of home range ##################################################
-
-  # Calculate the bandwidth parameter from the move object using "amt package"
-  # df_move_track <- amt::make_track(df_move, x, y, time, crs=crs_epsg)
-  # parh <- as.numeric(amt::hr_kde_ref(df_move_track)[1])
 
   # Initialize a list to store KDE results for each unique name
   kde_list <- list()
 
-  # Iterate over each unique name in the "Code" column
-  unique_names <- unique(df_move$Code)
+  # Loop through each unique "code name"
   for (name in unique_names) {
 
     # Subset the data for the current name
@@ -87,7 +65,11 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
     # Calculate KDE only if there are at least 5 relocations
     if (num_relocations >= 5) {
-      kde <- kernelUD(as(subset_data, "SpatialPoints"), h = parh)
+      # Convert subset_data to SpatialPointsDataFrame
+      subset_sp <- as(subset_data, "Spatial")
+
+      # Calculate kernel UD
+      kde <- kernelUD(subset_sp, h = parh)
       kde_list[[name]] <- kde
     } else {
       cat("Skipping kde calculation for", name, "due to fewer than 5 relocations.\n")
@@ -122,10 +104,17 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
   }
 
   # Combine all vertices into a single data frame
-  home <- do.call(rbind, vertices_list)
 
-  # Assign the projection to the calculated homerange
-  proj4string(home) <- crs
+  # First of all, filter out NULL elements from vertices_list
+  vertices_list_filtered <- vertices_list[!sapply(vertices_list, is.null)]
+
+  # Check if the filtered list is not empty
+  if (length(vertices_list_filtered) == 0) {
+    stop("Error: vertices_list does not contain valid elements.")
+  } else {
+    # Second, create SpatialPolygons (all combined together)
+    home <- do.call(rbind, vertices_list_filtered)
+  }
 
   # Homerange as data frame
   home1 <- as.data.frame(home)

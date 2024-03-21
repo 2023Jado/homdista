@@ -17,7 +17,7 @@ longitude column named as "x", latitude column named as "y", and timestamp named
 \item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
 }
 \value{
-movement
+movement paths
 }
 \description{
 Traveled distance

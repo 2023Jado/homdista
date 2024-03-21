@@ -20,7 +20,7 @@ homekde(file, tf, crs_epsg, Id_name, perc, parh)
 \item{parh}{bandwidth or smoothing parameter}
 }
 \value{
-homeshape
+home range polygons
 }
 \description{
 Home range spatial polygons

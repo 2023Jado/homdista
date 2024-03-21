@@ -12,7 +12,7 @@ hodicor(adista, cormethod)
 \item{cormethod}{correlation method between paired samples (pearson", "kendall", or "spearman")}
 }
 \value{
-correlation_dist_homer
+correlation values
 }
 \description{
 Correlation between the area utilized and traveled distance
