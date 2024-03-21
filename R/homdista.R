@@ -170,7 +170,17 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc){
   }
 
   # Combine all vertices into a single data frame
-  home <- do.call(rbind, vertices_list)
+
+  # First of all, filter out NULL elements from vertices_list
+  vertices_list_filtered <- vertices_list[!sapply(vertices_list, is.null)]
+
+  # Check if the filtered list is not empty
+  if (length(vertices_list_filtered) == 0) {
+    stop("Error: vertices_list does not contain valid elements.")
+  } else {
+    # Second, create SpatialPolygons (all combined together)
+    home <- do.call(rbind, vertices_list_filtered)
+  }
 
   # Assign the projection to the calculated homerange
   proj4string(home) <- crs
