@@ -69,25 +69,44 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
     stop("Some code names are missing or empty.")
   }
 
-  # Calculate traveled distance for each "Code" name
-  traveled_distances <- lapply(split(df_move_sorted, df_move_sorted$Code), function(group_coords) {
-    if (nrow(group_coords) > 1) {
+  # Initialize an empty list to store distances
+  traveled_distances <- list()
+
+  # Loop through each "Code" name
+  for (code in unique_codes) {
+
+    # Subset the data for the current code
+    subset_data <- df_move_sorted[df_move_sorted$Code == code, ]
+
+    # Check the number of relocations
+    num_relocations <- nrow(subset_data)
+
+    # Proceed if there are at least 5 relocations
+    if (num_relocations >= 5) {
 
       # Calculate distance between consecutive points
-      distances <- st_distance(group_coords)
+      distances <- st_distance(subset_data)
 
       # Sum the distances in km
-      total_distance <- sum(distances)/1000
-      return(total_distance)
+      total_distance <- sum(distances) / 1000
+
+      # Store the distance for this code
+      traveled_distances[[code]] <- total_distance
     } else {
-      return(0)  # Return 0 if there's only one or zero points
+      cat("Deleting subset for", code, "due to fewer than 5 relocations.\n")
+
+      # Delete this subset from the dataset
+      df_move_sorted <- df_move_sorted[df_move_sorted$Code != code, ]
     }
-  })
+  }
 
   # Convert the list of distances into a data frame
-  traveled_distances_df <- do.call(rbind, lapply(names(traveled_distances), function(code_dista) {
-    data.frame(Code = code_dista, Distance_km = traveled_distances[[code_dista]], row.names = NULL)
-  }))
+  traveled_distances_df <- data.frame(
+    Code = names(traveled_distances),
+    Distance_km = unlist(traveled_distances),
+    row.names = NULL
+  )
+
 
   # Remove the "[m]" suffix from the "Distance_km" column
   traveled_distances_df$Distance_km <- gsub("\\s*\\[m\\]", "", traveled_distances_df$Distance_km)
