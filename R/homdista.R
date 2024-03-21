@@ -180,11 +180,6 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
   # #################### Compute traveled distance ####################
 
-  # Prepare the layer to be used
-  df_move$x <- no_na_df_sorted$x
-  df_move$y <- no_na_df_sorted$y
-  df_move$time <- no_na_df_sorted$time
-  df_move$Code <- no_na_df_sorted$Code
 
   # Sort df_move by timestamp
   df_move_sorted <- df_move[order(df_move$time), ]
