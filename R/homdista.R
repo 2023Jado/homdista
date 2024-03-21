@@ -110,8 +110,8 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
     # Remove subset of data if there are fewer than 5 relocations
     if (num_relocations < 5) {
+      # Delete the rows from the dataframe where num_relocations < 5
       df_move <- df_move[df_move$Code != name, ]
-      cat("Removed subset of data for", name, "due to fewer than 5 relocations.\n")
     }
   }
 

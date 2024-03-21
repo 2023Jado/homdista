@@ -21,7 +21,17 @@
 #' library(homdista)
 #'
 #' # Home range spatial polygons
-#' homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
+#' homerange <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
+#'
+#'  # Convert "sp" object to "sf"
+#'  homerange_sf <- st_as_sf(homerange)
+#'
+#' # Define a palette for colors
+#' palette <- rainbow(length(unique(homerange_sf$Id)))
+#'
+#' #Create map with mapview
+#' mapview(homerange_sf, zcol = "Id", col.regions = palette, legend = TRUE, legend.title = "", legend.values = unique(homerange_sf$Id))
+#'
 #'
 homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
@@ -68,8 +78,8 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
     # Remove subset of data if there are fewer than 5 relocations
     if (num_relocations < 5) {
+      # Delete the rows from the dataframe where num_relocations < 5
       df_move <- df_move[df_move$Code != name, ]
-      cat("Removed subset of data for", name, "due to fewer than 5 relocations.\n")
     }
   }
 
@@ -136,20 +146,6 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Convert back to SpatialPolygonsDataFrame
 
   homeshape <- SpatialPolygonsDataFrame(home, home3)
-
-
-  # ###################### Plot a home range map ####################################
-
-  # Convert "sp" object to "sf"
-  homerange_sf <- st_as_sf(homeshape)
-
-  # Define a palette for colors
-  palette <- rainbow(length(unique(homerange_sf$Id)))
-
-  # Create map with mapview
-  map <- mapview(homerange_sf, zcol = "Id", col.regions = palette,
-                 legend = TRUE, legend.title = "", legend.values = unique(homerange_sf$Id))
-  map
 
   return(homeshape)
 }

@@ -37,6 +37,16 @@ perc <- 95
 library(homdista)
 
 # Home range spatial polygons
-homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
+homerange <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
+
+ # Convert "sp" object to "sf"
+ homerange_sf <- st_as_sf(homerange)
+
+# Define a palette for colors
+palette <- rainbow(length(unique(homerange_sf$Id)))
+
+#Create map with mapview
+mapview(homerange_sf, zcol = "Id", col.regions = palette, legend = TRUE, legend.title = "", legend.values = unique(homerange_sf$Id))
+
 
 }
