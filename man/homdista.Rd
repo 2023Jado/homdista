@@ -29,6 +29,19 @@ Estimation of kde habitat utilization area and traveled distance
 \examples{
 file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
 
+#Run the following libraries
+library(sp)
+library(sf)
+library(ade4)
+library(adehabitatMA)
+library(CircStats)
+library(adehabitatLT)
+library(adehabitatHR)
+library(lubridate)
+library(ggplot2)
+library(mapview)
+library(tidyr)
+
 # Define some parameters
 tf <- "\%m/\%d/\%y \%H:\%M"
 Id_name <- "Animal"
