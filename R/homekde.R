@@ -116,9 +116,9 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
   for (i in 1:length(kde_list)) {
     vertices <- get_vertices(kde_list[[i]])
     if (!is.null(vertices)) {
-
       # Add code name column to vertices data frame
-      vertices$Code <- unique_names[i]
+      code_name <- unique_names[i]
+      vertices$Code <- rep(code_name, nrow(vertices))
       vertices_list[[i]] <- vertices
     }
   }
