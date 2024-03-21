@@ -25,6 +25,7 @@ Home range spatial polygons
 }
 \examples{
 file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
+
 # Define some parameters
 tf <- "\%m/\%d/\%y \%H:\%M"
 Id_name <- "Animal"
@@ -32,6 +33,7 @@ crs_epsg <- 32734
 perc <- 95
 
 library(homdista)
+
 # Home range spatial polygons
 homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
 
