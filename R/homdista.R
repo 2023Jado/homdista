@@ -111,8 +111,14 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
     # Proceed if there are at least 5 relocations
     if (num_relocations >= 5) {
 
+      # Convert subset_data to SpatialPointsDataFrame
+      subset_sp <- st_as_sf(subset_data, coords = c("x", "y"))
+
+      # Convert subset_sp to SpatialPoints object
+      subset_sp_points <- as(subset_sp, "Spatial")
+
       # Calculate kernel UD
-      kde <- kernelUD(as(subset_data, "SpatialPoints"), h = parh)
+      kde <- kernelUD(subset_sp_points, h = parh)
       kde_list[[name]] <- kde
     } else {
       cat("Deleting KDE result for", name, "due to fewer than 5 relocations.\n")
