@@ -113,18 +113,16 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
   vertices_list <- list()
 
   # Iterate over each KDE object and extract vertices for each "code" name
-  for (i in 1:length(kde_list)) {
-    vertices <- get_vertices(kde_list[[i]])
+  for (name in names(kde_list)) {
+    vertices <- get_vertices(kde_list[[name]])
     if (!is.null(vertices)) {
       # Add code name column to vertices data frame
-      code_name <- unique_names[i]
-      vertices$Code <- rep(code_name, nrow(vertices))
-      vertices_list[[i]] <- vertices
+      vertices$Code <- name
+      vertices_list[[name]] <- vertices
     }
   }
 
   # Combine all vertices into a single data frame
-
   # First of all, filter out NULL elements from vertices_list
   vertices_list_filtered <- vertices_list[!sapply(vertices_list, is.null)]
 
@@ -135,6 +133,7 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
     # Second, create SpatialPolygons (all combined together)
     home <- do.call(rbind, vertices_list_filtered)
   }
+
 
   # Homerange as data frame
   home1 <- as.data.frame(home)
