@@ -4,11 +4,11 @@
 \alias{homdista}
 \title{Estimation of kde habitat utilization area and traveled distance}
 \usage{
-homdista(file, tf, crs_epsg, Id_name, perc)
+homdista(file, tf, crs_epsg, Id_name, perc, parh)
 }
 \arguments{
 \item{file}{data frame already read in R and has at least the following three columns:
-longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case), the function use amt package for determining the minimum bandwidth to be used for estimating the home range area.}
+longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case).}
 
 \item{tf}{timestamp format}
 
@@ -17,6 +17,8 @@ longitude column named as "x", latitude column named as "y", and timestamp named
 \item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
 
 \item{perc}{Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50\% for core areas, 75\%, 90\%, 95\%, ...)}
+
+\item{parh}{bandwidth or smoothing parameter}
 }
 \value{
 final_file

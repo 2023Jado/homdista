@@ -5,7 +5,7 @@
 #' @param crs_epsg the epsg code related to the dataset coordinates
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
 #' @param perc Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50% for core areas, 75%, 90%, 95%, ...)
-#'
+#' @param parh bandwidth or smoothing parameter
 #' @return homeshape
 #' @export
 #'
@@ -23,7 +23,7 @@
 #' # Home range spatial polygons
 #' homerange_polygons <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
 #'
-homekde <- function(file, tf, crs_epsg, Id_name, perc){
+homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
   data_df <- file
 
   # Rename the column
@@ -69,8 +69,8 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc){
   ############################ Calculations of home range ##################################################
 
   # Calculate the bandwidth parameter from the move object using "amt package"
-  df_move_track <- amt::make_track(df_move, x, y, time, crs=crs_epsg)
-  parh <- as.numeric(amt::hr_kde_ref(df_move_track)[1])
+  # df_move_track <- amt::make_track(df_move, x, y, time, crs=crs_epsg)
+  # parh <- as.numeric(amt::hr_kde_ref(df_move_track)[1])
 
   # Initialize a list to store KDE results for each unique name
   kde_list <- list()
