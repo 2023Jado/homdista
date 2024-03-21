@@ -25,6 +25,7 @@
 #'library(ggplot2)
 #'library(mapview)
 #'library(tidyr)
+#'library(move)
 #'
 #' # Define some parameters
 #'tf <- "%m/%d/%y %H:%M"
