@@ -129,23 +129,19 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
   homeshape <- SpatialPolygonsDataFrame(home, home3)
 
+
   # ###################### Plot a home range map ####################################
 
-  # Create mapview for each homerange separately
+  # Convert "sp" object to "sf"
+  homerange_sf <- st_as_sf(homeshape)
 
-  homeranges <- lapply(unique(home$Code), function(code_home) {
-    mapview(home[home$Code == code_home, ],
-            col.regions = "transparent",
-            col = rainbow(length(unique(home$Code))),
-            layer.name = code_home,
-            alpha.regions = 0,
-            legend.opacity = 1,
-            alpha = 1,
-            lwd = 2
-    )
-  })
+  # Define a palette for colors
+  palette <- rainbow(length(unique(homerange_sf$Id)))
 
-  print(homeranges)
+  # Create map with mapview
+  mapview(homerange_sf, zcol = "Id", col.regions = palette,
+                 legend = TRUE, legend.title = "", legend.values = unique(homerange_sf$Id))
+
   return(homeshape)
 }
 
