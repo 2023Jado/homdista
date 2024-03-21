@@ -93,11 +93,14 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
    ############################ Calculations of home range ##################################################
 
+  # Get unique names from df_move$Code
+  unique_names <- unique(df_move$Code)
+
   # Initialize a list to store KDE results for each unique name
   kde_list <- list()
 
-  # Get unique names from df_move$Code
-  unique_names <- unique(df_move$Code)
+  # Initialize an empty dataframe to store data with at least 5 relocations
+  df_move_filtered <- data.frame()
 
   # Loop through each unique "code name"
   for (name in unique_names) {
@@ -108,18 +111,14 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
     # Check the number of relocations
     num_relocations <- nrow(subset_data)
 
-    # Remove subset of data if there are fewer than 5 relocations
+    # Check if the number of relocations is less than 5
     if (num_relocations < 5) {
-      # Delete the rows from the dataframe where num_relocations < 5
-      df_move <- df_move[df_move$Code != name, ]
+      # If fewer than 5 relocations, skip this subset
+      next
     }
-  }
 
-  # Now perform KDE calculation for remaining data
-  for (name in unique(df_move$Code)) {
-
-    # Subset the data for the current name
-    subset_data <- df_move[df_move$Code == name, ]
+    # Append data to filtered dataframe
+    df_move_filtered <- rbind(df_move_filtered, subset_data)
 
     # Convert subset_data to SpatialPointsDataFrame
     subset_sp <- as(subset_data, "Spatial")
