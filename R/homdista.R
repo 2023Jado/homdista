@@ -84,12 +84,12 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   no_na_df_sorted <- data_df_no_na[order(data_df_no_na$time), ]
 
   # Create a "code name" column to be used for home range estimation
-  no_na_df_sorted$Month_code <- month(no_na_data_unique$time)
-  no_na_df_sorted$Year_code <- year(no_na_data_unique$time)
-  no_na_df_sorted$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$groupid)
+  no_na_df_sorted$Month_code <- month(no_na_df_sorted$time)
+  no_na_df_sorted$Year_code <- year(no_na_df_sorted$time)
+  no_na_df_sorted$Code <- paste(no_na_df_sorted$Month_code, no_na_df_sorted$Year_code, no_na_df_sorted$groupid)
 
   # Change the data frame to "sf" object
-  df_move <- st_as_sf(no_na_data_unique, coords = c("x", "y"), crs=crs_epsg)
+  df_move <- st_as_sf(no_na_df_sorted, coords = c("x", "y"), crs=crs_epsg)
 
    ############################ Calculations of home range ##################################################
 
