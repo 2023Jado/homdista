@@ -53,6 +53,7 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
   # Initialize a list to store KDE results for each unique name
   kde_list <- list()
+  uniques_names <- unique(df_move$Code)
 
   # Loop through each unique "code name"
   for (name in unique_names) {

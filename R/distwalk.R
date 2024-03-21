@@ -70,7 +70,7 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
   }
 
   # Calculate traveled distance for each "Code" name
-  traveled_distances <- lapply(split(coordinates_sf, df_move_sorted$Code), function(group_coords) {
+  traveled_distances <- lapply(split(df_move_sorted, df_move_sorted$Code), function(group_coords) {
     if (nrow(group_coords) > 1) {
 
       # Calculate distance between consecutive points
