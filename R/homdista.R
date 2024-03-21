@@ -13,6 +13,19 @@
 #' @examples
 #' file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
 #'
+#'#Run the following libraries
+#'library(sp)
+#'library(sf)
+#'library(ade4)
+#'library(adehabitatMA)
+#'library(CircStats)
+#'library(adehabitatLT)
+#'library(adehabitatHR)
+#'library(lubridate)
+#'library(ggplot2)
+#'library(mapview)
+#'library(tidyr)
+#'
 #' # Define some parameters
 #'tf <- "%m/%d/%y %H:%M"
 #'Id_name <- "Animal"
@@ -25,47 +38,6 @@
 #'area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
 #'
 homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
-
-  # List of packages
-  packages <- c("sp", "sf", "ade4", "adehabitatMA",
-                "CircStats", "adehabitatLT", "adehabitatHR",
-                "lubridate", "ggplot2", "scales", "mapview",
-                "circular", "basemaps", "tidyr")
-
-  # Function to install and load packages
-
-  install_load_packages <- function(packages) {
-
-    # Check if packages are not installed
-    to_be_install <- setdiff(packages, rownames(installed.packages()))
-
-    if (length(to_be_install) > 0) {
-
-      # Install missing packages
-      install.packages(to_be_install)
-    }
-
-    # Load packages
-    lapply(packages, require, character.only = TRUE)
-  }
-
-  # Install and load packages
-  install_load_packages(packages)
-
-  library(sp)
-  library(sf)
-  library(ade4)
-  library(adehabitatMA)
-  library(CircStats)
-  library(adehabitatLT)
-  library(adehabitatHR)
-  library(lubridate)
-  library(ggplot2)
-  library(scales)
-  library(mapview)
-  library(circular)
-  library(basemaps)
-  library(tidyr)
 
   # Read the csv data
 
