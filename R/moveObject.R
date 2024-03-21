@@ -42,8 +42,8 @@ moveObject <- function(file, tf, Id_name, crs_epsg){
   no_na_df_sorted <- data_df_no_na[order(data_df_no_na$time), ]
 
   # Identify duplicate timestamps
-  duplicate_indices <- duplicated(no_na_df_sorted$time) | #If I don't do this, why do I get the error that dataset includes double timestamps?
-    duplicated(no_na_df_sorted$time, fromLast = TRUE)     #I loose many rows if I apply this (however, it is the only option I have so far)
+  duplicate_indices <- duplicated(no_na_df_sorted$time) |
+    duplicated(no_na_df_sorted$time, fromLast = TRUE)
 
   # Remove duplicate timestamps
   no_na_data_unique <- no_na_df_sorted[!duplicate_indices, ]
