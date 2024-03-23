@@ -27,7 +27,7 @@ home range area in km2 and traveled distance in km
 Estimation of kde habitat utilization area and traveled distance
 }
 \examples{
-file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
+file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
 
 #Run the following libraries
 library(sp)

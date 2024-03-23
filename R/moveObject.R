@@ -11,7 +11,7 @@
 #'
 #' @examples
 #'
-#' file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/African elephant Jammes Hwange NP2.csv", header=T)
+#' file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
 #'
 #'  # Define some parameters
 #'tf <- "%m/%d/%y %H:%M"
