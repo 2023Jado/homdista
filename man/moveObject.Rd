@@ -36,7 +36,8 @@ library(homdista)
 #Make the move object from data frame
 moveObj <- homdista::moveObject(file, tf, Id_name, crs_epsg)
 
-#Create map with mapview
-mapview(moveObj)
+#Check for some computations
+distance <- move::distance(moveObj)
+angle <- move::angle(moveObj)
 
 }

@@ -23,8 +23,9 @@
 #' #Make the move object from data frame
 #' moveObj <- homdista::moveObject(file, tf, Id_name, crs_epsg)
 #'
-#' #Create map with mapview
-#' mapview(moveObj)
+#' #Check for some computations
+#' distance <- move::distance(moveObj)
+#' angle <- move::angle(moveObj)
 #'
 moveObject <- function(file, tf, Id_name, crs_epsg){
   # Read the csv data
@@ -68,7 +69,7 @@ moveObject <- function(file, tf, Id_name, crs_epsg){
 
   # Change the projection
   crscode <- crs_epsg
-  crs(df_move) <- CRS(paste0("+init=epsg:", crscode))
+  proj4string(df_move) <- CRS(paste0("+init=epsg:", crscode))
 
 }
 
