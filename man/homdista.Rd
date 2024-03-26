@@ -2,7 +2,7 @@
 % Please edit documentation in R/homdista.R
 \name{homdista}
 \alias{homdista}
-\title{Estimating the area of habitat utilization and the distance traveled using Kernel density estimation (KDE)}
+\title{Estimating Utilized Habitat Area Using Kernel Density Estimation (KDE) and Calculating Traveled Distance}
 \usage{
 homdista(file, tf, crs_epsg, Id_name, perc, parh)
 }
@@ -25,11 +25,11 @@ home range area in km2 and traveled distance in km
 \description{
 The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance,
 These functions are:
-homdista::homdista(): Computes the area utilized and distance walked per month and year,
-homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/...,
-homdista::hodicor(): Computes correlation values and plots the correlation between area and distance,
-homdista::distwalk(): Generates line paths representing the traveled distance,
-homdista::moveObject(): Converts the data frame into a move object for further movement analysis,
+(1) homdista::homdista(): Computes the area utilized and distance walked per month and year.
+(2) homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/etc..
+(3) homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
+(4) homdista::distwalk(): Generates line paths representing the traveled distance.
+(5) homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
 These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
 }
 \examples{
