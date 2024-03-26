@@ -7,8 +7,7 @@
 moveObject(file, tf, Id_name, crs_epsg)
 }
 \arguments{
-\item{file}{file data frame already read in R and has at least the following three columns:
-longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case).}
+\item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
 
 \item{tf}{timestamp format}
 
@@ -27,7 +26,7 @@ Data frame to Move object
 file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
 
  # Define some parameters
-tf <- "\%m/\%d/\%y \%H:\%M"
+tf <- "\%m/\%d/\%y \%I:\%M \%p"
 Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95

@@ -7,8 +7,7 @@
 distwalk(file, tf, crs_epsg, Id_name)
 }
 \arguments{
-\item{file}{data frame file already read in R and has at least three columns named as follows
-longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp"}
+\item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
 
 \item{tf}{timestamp format}
 
@@ -27,7 +26,7 @@ file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", heade
 
 # Define some parameters
 
-tf <- "\%m/\%d/\%y \%H:\%M"
+tf <- "\%m/\%d/\%y \%I:\%M \%p"
 Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95

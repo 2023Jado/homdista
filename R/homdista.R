@@ -1,11 +1,19 @@
-#' Estimation of kde habitat utilization area and traveled distance
+#' Estimating the area of habitat utilization and the distance traveled using Kernel density estimation (KDE)
 #'
-#' @param file data frame already read in R and has at least the following three columns:
-#' longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case).
+#'The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance,
+#'These functions are:
+#'homdista::homdista(): Computes the area utilized and distance walked per month and year,
+#'homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/...,
+#'homdista::hodicor(): Computes correlation values and plots the correlation between area and distance,
+#'homdista::distwalk(): Generates line paths representing the traveled distance,
+#'homdista::moveObject(): Converts the data frame into a move object for further movement analysis,
+#'These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
+#'
+#' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
 #' @param crs_epsg the epsg code related to the dataset coordinates
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
-#' @param perc Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50% for core areas, 75%, 90%, 95%, ...)
+#' @param perc The percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for core areas, 75%, 90%, 95%, ...).
 #' @param parh bandwidth or smoothing parameter
 #' @return home range area in km2 and traveled distance in km
 #' @export
@@ -28,7 +36,7 @@
 #'library(move)
 #'
 #' # Define some parameters
-#'tf <- "%m/%d/%y %H:%M"
+#'tf <- "%m/%d/%y %I:%M %p"
 #'Id_name <- "Animal"
 #'crs_epsg <- 32734
 #'perc <- 95
@@ -105,7 +113,7 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Function to extract vertices for each "code" name stored in kde_list
   get_vertices <- function(kde) {
 
-    # Extract vertices accounting for a certain percentage of the kernel density in an area unit
+    # Extract vertices accounting for a certain percentage of the kernel density in an area unit (km2)
     code_name <- tryCatch({
       getverticeshr(kde, percent = perc, unout = "km2")
     }, error = function(e) {

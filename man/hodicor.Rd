@@ -21,7 +21,7 @@ Correlation between the area utilized and traveled distance
  file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
 
  # Define some parameters
- tf <- "\%m/\%d/\%y \%H:\%M"
+ tf <- "\%m/\%d/\%y \%I:\%M \%p"
  Id_name <- "Animal"
  crs_epsg <- 32734
  perc <- 95

@@ -7,7 +7,7 @@
 homekde(file, tf, crs_epsg, Id_name, perc, parh)
 }
 \arguments{
-\item{file}{data frame file already read in R and has at least three columns named as follows longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp"}
+\item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
 
 \item{tf}{timestamp format}
 
@@ -15,7 +15,7 @@ homekde(file, tf, crs_epsg, Id_name, perc, parh)
 
 \item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
 
-\item{perc}{Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50\% for core areas, 75\%, 90\%, 95\%, ...)}
+\item{perc}{The percentage utilized to calculate the KDE home range at a specific level (e.g., 50\% for core areas, 75\%, 90\%, 95\%, ...).}
 
 \item{parh}{bandwidth or smoothing parameter}
 }
@@ -29,7 +29,7 @@ Home range spatial polygons
 file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
 
 # Define some parameters
-tf <- "\%m/\%d/\%y \%H:\%M"
+tf <- "\%m/\%d/\%y \%I:\%M \%p"
 Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95

@@ -2,13 +2,12 @@
 % Please edit documentation in R/homdista.R
 \name{homdista}
 \alias{homdista}
-\title{Estimation of kde habitat utilization area and traveled distance}
+\title{Estimating the area of habitat utilization and the distance traveled using Kernel density estimation (KDE)}
 \usage{
 homdista(file, tf, crs_epsg, Id_name, perc, parh)
 }
 \arguments{
-\item{file}{data frame already read in R and has at least the following three columns:
-longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp" (both in lower case).}
+\item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
 
 \item{tf}{timestamp format}
 
@@ -16,7 +15,7 @@ longitude column named as "x", latitude column named as "y", and timestamp named
 
 \item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
 
-\item{perc}{Percentage which is used to compute the home range utilization i.e kernel density estimation at a given level (percentage) (50\% for core areas, 75\%, 90\%, 95\%, ...)}
+\item{perc}{The percentage utilized to calculate the KDE home range at a specific level (e.g., 50\% for core areas, 75\%, 90\%, 95\%, ...).}
 
 \item{parh}{bandwidth or smoothing parameter}
 }
@@ -24,7 +23,14 @@ longitude column named as "x", latitude column named as "y", and timestamp named
 home range area in km2 and traveled distance in km
 }
 \description{
-Estimation of kde habitat utilization area and traveled distance
+The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance,
+These functions are:
+homdista::homdista(): Computes the area utilized and distance walked per month and year,
+homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/...,
+homdista::hodicor(): Computes correlation values and plots the correlation between area and distance,
+homdista::distwalk(): Generates line paths representing the traveled distance,
+homdista::moveObject(): Converts the data frame into a move object for further movement analysis,
+These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
 }
 \examples{
 file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
@@ -44,7 +50,7 @@ library(tidyr)
 library(move)
 
 # Define some parameters
-tf <- "\%m/\%d/\%y \%H:\%M"
+tf <- "\%m/\%d/\%y \%I:\%M \%p"
 Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95

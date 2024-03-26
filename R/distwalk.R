@@ -1,7 +1,6 @@
 #' Traveled distance
 #'
-#' @param file data frame file already read in R and has at least three columns named as follows
-#' longitude column named as "x", latitude column named as "y", and timestamp named as "timestamp"
+#' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
 #' @param crs_epsg the epsg code related to the dataset coordinates
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
@@ -14,7 +13,7 @@
 #'
 #' # Define some parameters
 #'
-#' tf <- "%m/%d/%y %H:%M"
+#' tf <- "%m/%d/%y %I:%M %p"
 #' Id_name <- "Animal"
 #' crs_epsg <- 32734
 #' perc <- 95
