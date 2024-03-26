@@ -69,7 +69,8 @@ moveObject <- function(file, tf, Id_name, crs_epsg){
 
   # Change the projection
   crscode <- crs_epsg
-  crs(df_move) <- CRS(paste0("+proj=utm +zone=", crscode))
+  df_move <- spTransform(df_move, CRS(paste0("+init=epsg:", crscode)))
+  return(df_move)
 
 }
 
