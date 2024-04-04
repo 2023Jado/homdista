@@ -17,6 +17,7 @@ These functions include:
 These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
 
 **Parameters:**
+
 **file:** R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 
 **tf:** timestamp format
