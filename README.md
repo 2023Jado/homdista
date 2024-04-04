@@ -4,20 +4,32 @@ This is the documentation of homdista package. Let us go through an example toge
 The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance.
 These functions include:
 homdista::homdista(): Computes the area utilized and distance walked per month and year.
-homdista::homekde(): Generates polygons representing the utilized areas for each group. 
-homdista::hodicor(): Computes correlation values and plots the correlation between area and distance. 
-homdista::distwalk(): Generates line paths representing the traveled distance. 
-homdista::moveObject(): Converts the data frame into a move object for further movement analysis. 
+
+homdista::homekde(): Generates polygons representing the utilized areas for each group.
+
+homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
+
+homdista::distwalk(): Generates line paths representing the traveled distance.
+
+homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
+
 These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
 
 Parameters:
 file: R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
+
 tf: timestamp format
+
 crs_epsg: the epsg code related to the dataset coordinates
+
 Id_name: Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
+
 perc: The percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for core areas, 75%, 90%, 95%, ...).
+
 parh: bandwidth or smoothing parameter
+
 adista: a layer containing the area and distances values generated from the homdista function
+
 cormethod: correlation method between paired samples (pearson", "kendall", or "spearman")
 &nbsp;
 ```
