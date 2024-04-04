@@ -1,9 +1,7 @@
 # homdista
 #homdista
 This is the documentation of homdista package. Let us go through an example together.
-
-We start with calculation 
-
+We start with kde home range estimation and distance calculation.
 &nbsp;
 
 ```
