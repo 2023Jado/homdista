@@ -28,11 +28,11 @@ These functions collectively provide comprehensive tools for analyzing movement 
 
 **perc:** The percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for core areas, 75%, 90%, 95%, ...).
 
-**parh:** bandwidth or smoothing parameter
+**parh:** Bandwidth or smoothing parameter
 
-**adista:** a layer containing the area and distances values generated from the homdista function
+**adista:** A layer containing the area and distances values generated from the homdista function
 
-**cormethod:** correlation method between paired samples (pearson", "kendall", or "spearman")
+**cormethod:** Correlation method between paired samples (pearson", "kendall", or "spearman")
 &nbsp;
 ```
 # Estimating the home range size and walked distances
