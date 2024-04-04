@@ -1,9 +1,10 @@
 # homdista
 
 This is the documentation of homdista package. Let us go through an example together.
+
 &nbsp;
 
-'''
+```
 library(homdista)
 
 library(lubridate)
@@ -40,8 +41,8 @@ Move <- homdista::moveObject(file, "%m/%d/%y %I:%M %p", "Animal", 32734)
 plot(Move)
 move::distance(Move)
 move::angle(Move)
-'''
-**Below is the detailed code for kde home range estimation and traveled distance **
+```
+Below is the detailed code for kde home range estimation and traveled distance
 ```
 # Read the csv data
 
