@@ -32,7 +32,7 @@ These functions collectively provide comprehensive tools for analyzing movement 
 
 **adista:** A layer containing the area and distance values generated from the homdista function
 
-**cormethod:** Correlation method between paired samples ("pearson", "kendall", or "spearman")
+**cormethod:** Correlation method between paired samples ("pearson", "kendall", or "spearman") at confidence level of 95%
 &nbsp;
 ```
 # Estimating the home range size and walked distances
