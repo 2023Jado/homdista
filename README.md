@@ -1,6 +1,5 @@
 # homdista
 
-This is the documentation of homdista package. Let us go through an example together.
 The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance.
 These functions are:
 
