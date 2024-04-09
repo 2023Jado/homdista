@@ -30,7 +30,7 @@ These functions collectively provide comprehensive tools for analyzing movement 
 
 **parh:** Bandwidth or smoothing parameter
 
-**adista:** A layer containing the area and distances values generated from the homdista function
+**adista:** A layer containing the area and distance values generated from the homdista function
 
 **cormethod:** Correlation method between paired samples ("pearson", "kendall", or "spearman")
 &nbsp;
