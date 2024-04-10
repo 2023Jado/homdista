@@ -68,7 +68,7 @@ library(ggplot2)
 library(move)
 
 # Read the file
-file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester2/Animal_movement/Data/data.csv", header=T)
+file <- read.csv("data.csv", header=T)
 
 # Estimating the home range size and walked distances per month
 Homerange_distance <- homdista::homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
