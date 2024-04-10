@@ -2,7 +2,7 @@
 Please, install the package as follows:
 
 ```
-devtools::install_gthub("https://github.com/2023Jado/homdista")
+devtools::install_github("https://github.com/2023Jado/homdista")
 ```
 
 The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance.
