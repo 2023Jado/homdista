@@ -1,95 +1,73 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # homdista
-Please, install the package as follows:
 
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of homdista is to analyze the movements of any objects by
+calculating the utilized home range areas and walked distances per month
+and year. The package offers a suite of functions for this purpose as
+follows:
+
+homdista::homdista(): Computes the area utilized and distance walked per
+month and year.
+
+homdista::homekde(): Generates polygons representing the utilized areas
+for each group.
+
+homdista::hodicor(): Computes correlation values and plots the
+correlation between area and distance.
+
+homdista::distwalk(): Generates line paths representing the traveled
+distance.
+
+homdista::moveObject(): Converts the data frame into a move object for
+further movement analysis.
+
+These functions collectively provide comprehensive tools for analyzing
+movement patterns and habitat utilization.
+
+## Installation
+
+You can install the development version of homdista from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("2023Jado/homdista")
 ```
-devtools::install_github("https://github.com/2023Jado/homdista")
-```
 
-The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance.
-These functions are:
+## Example
 
-**homdista::homdista():** Computes the area utilized and distance walked per month and year.
+This is a basic example which shows you how to solve a common problem:
 
-**homdista::homekde():** Generates polygons representing the utilized areas for each group.
-
-**homdista::hodicor():** Computes correlation values and plots the correlation between area and distance.
-
-**homdista::distwalk():** Generates line paths representing the traveled distance.
-
-**homdista::moveObject():** Converts the data frame into a move object for further movement analysis.
-
-These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
-
-**Parameters:**
-
-**file:** R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
-
-**tf:** timestamp format
-
-**crs_epsg:** the epsg code related to the dataset coordinates
-
-**Id_name:** Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
-
-**perc:** The percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for core areas, 75%, 90%, 95%, ...).
-
-**parh:** Bandwidth or smoothing parameter
-
-**adista:** A layer containing the area and distance values generated from the homdista function
-
-**cormethod:** Correlation method between paired samples ("pearson", "kendall", or "spearman") at confidence level of 95%
-&nbsp;
-```
-# Estimating the home range size and walked distances
-homdista(file, tf, crs_epsg, Id_name, perc, parh)
-
-# Home range polygons
-homekde(file, tf, crs_epsg, Id_name, perc, parh)
-
-# Determining and plotting the correlation between walked distance and utilized home range area
-hodicor(adista, cormethod)
-
-# Walked distance line paths
-distwalk(file, tf, crs_epsg, Id_name)
-
-# Data frame to move object
-moveObject(file, tf, Id_name, crs_epsg)
-```
-Below is the example code
-```
+``` r
 library(homdista)
-
-library(lubridate)
-library(sf)
-library(sp)
-library(adehabitatLT)
-library(adehabitatHR)
-library(mapview)
-library(ggplot2)
-library(move)
-
-# Read the file
-file <- read.csv("data.csv", header=T)
-
-# Estimating the home range size and walked distances per month
-Homerange_distance <- homdista::homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
-
-# Determining and plotting the correlation between walked distance and utilized home range area
-Correlation <- homdista::hodicor(Homerange_distance, "spearman")
-
-# Walked distance line paths
-Distance <- homdista::distwalk(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
-mapview(Distance)
-
-# Home range polygons
-Homerange <- homdista::homekde(file, "%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
-st_as_sf(Homerange)
-palette <- rainbow(length(unique(Homerange$Id)))
-mapview(Homerange, zcol = "Id", col.regions = palette,
-               legend = TRUE, legend.title = "", legend.values = unique(Homerange$Id))
-
-# Data frame to move object
-Move <- homdista::moveObject(file, "%m/%d/%y %I:%M %p", "Animal", 32734)
-plot(Move)
-move::distance(Move)
-move::angle(Move)
+## basic example code
 ```
+
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
+
+``` r
+summary(cars)
+#>      speed           dist       
+#>  Min.   : 4.0   Min.   :  2.00  
+#>  1st Qu.:12.0   1st Qu.: 26.00  
+#>  Median :15.0   Median : 36.00  
+#>  Mean   :15.4   Mean   : 42.98  
+#>  3rd Qu.:19.0   3rd Qu.: 56.00  
+#>  Max.   :25.0   Max.   :120.00
+```
+
+You’ll still need to render `README.Rmd` regularly, to keep `README.md`
+up-to-date. `devtools::build_readme()` is handy for this.
+
+You can also embed plots, for example:
+
+<img src="man/figures/README-pressure-1.png" width="100%" />
+
+In that case, don’t forget to commit and push the resulting figure
+files, so they display on GitHub and CRAN.

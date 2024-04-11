@@ -18,14 +18,27 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of homdista is to ...
+The goal of homdista is to analyze the movements of any objects by calculating the utilized home range areas and walked distances per month and year. The package offers a suite of functions for this purpose as follows:
+
+homdista::homdista(): Computes the area utilized and distance walked per month and year.
+
+homdista::homekde(): Generates polygons representing the utilized areas for each group.
+
+homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
+
+homdista::distwalk(): Generates line paths representing the traveled distance.
+
+homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
+
+These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
 
 ## Installation
 
-You can install the development version of homdista like so:
+You can install the development version of homdista from [GitHub](https://github.com/) with:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# install.packages("devtools")
+devtools::install_github("2023Jado/homdista")
 ```
 
 ## Example
