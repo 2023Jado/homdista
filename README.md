@@ -33,14 +33,6 @@ devtools::install_github("2023Jado/homdista")
 
 ## To effectively use homdista for data analysis, you will need to install and use the following additional packages
 
-    library(sp)
-    library(sf)
-    library(ade4)
-    library(adehabitatMA)
-    library(CircStats)
-    library(adehabitatLT)
-    library(adehabitatHR)
-    library(lubridate)
     library(ggplot2)
     library(mapview)
     library(tidyr)
@@ -48,11 +40,48 @@ devtools::install_github("2023Jado/homdista")
 
 ## Example
 
-The following are basics examples for how each of the functions works:
+The following are basic examples for how each of the functions works:
 
 ``` r
+options(warn = -1)
 library(homdista)
-## basic example code
+## Additional packages
+library(sp)
+library(sf)
+#> Linking to GEOS 3.11.2, GDAL 3.7.2, PROJ 9.3.0; sf_use_s2() is TRUE
+library(ade4)
+library(adehabitatMA)
+#> Registered S3 methods overwritten by 'adehabitatMA':
+#>   method                       from
+#>   print.SpatialPixelsDataFrame sp  
+#>   print.SpatialPixels          sp
+library(CircStats)
+#> Loading required package: MASS
+#> Loading required package: boot
+library(adehabitatLT)
+library(adehabitatHR)
+library(lubridate)
+#> 
+#> Attaching package: 'lubridate'
+#> The following objects are masked from 'package:base':
+#> 
+#>     date, intersect, setdiff, union
+library(tidyr)
+
+## Home range area (with Kernel density estimator) and walked distance calculation
+file <- read.csv("data.csv", header = T)
+area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
+#> Deleting KDE result for 7 2009 elephant due to fewer than 5 relocations.
+#> Deleting subset for 7 2009 elephant due to fewer than 5 relocations.
+
+head(area_distance)
+#>   Month Year       Id      Distance_km  Area_km2
+#> 1     1 2010 elephant 4214388.24853781  14.70935
+#> 2     1 2013 elephant 11125730.8726069 415.80637
+#> 3     1 2014 elephant 11881704.5000014 189.73659
+#> 4     1 2016 elephant 2775637.76426774  95.63485
+#> 5     1 2017 elephant 2163398.18108898 420.97294
+#> 6    10 2010 elephant 1740522.35195486 865.69368
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`?

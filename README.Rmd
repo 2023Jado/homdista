@@ -42,6 +42,19 @@ devtools::install_github("2023Jado/homdista")
 ```
 ## To effectively use homdista for data analysis, you will need to install and use the following additional packages
 ```
+library(ggplot2)
+library(mapview)
+library(tidyr)
+library(move)
+```
+## Example
+
+The following are basic examples for how each of the functions works:
+
+```{r example}
+options(warn = -1)
+library(homdista)
+## Additional packages
 library(sp)
 library(sf)
 library(ade4)
@@ -50,18 +63,13 @@ library(CircStats)
 library(adehabitatLT)
 library(adehabitatHR)
 library(lubridate)
-library(ggplot2)
-library(mapview)
 library(tidyr)
-library(move)
-```
-## Example
 
-The following are basics examples for how each of the functions works:
+## Home range area (with Kernel density estimator) and walked distance calculation
+file <- read.csv("data.csv", header = T)
+area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
 
-```{r example}
-library(homdista)
-## basic example code
+head(area_distance)
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
