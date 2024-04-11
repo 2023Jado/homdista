@@ -35,7 +35,21 @@ You can install the development version of homdista from
 # install.packages("devtools")
 devtools::install_github("2023Jado/homdista")
 ```
-
+## To effectively use homdista for data analysis, you will need to install and use the following additional packages
+```
+library(sp)
+library(sf)
+library(ade4)
+library(adehabitatMA)
+library(CircStats)
+library(adehabitatLT)
+library(adehabitatHR)
+library(lubridate)
+library(ggplot2)
+library(mapview)
+library(tidyr)
+library(move)
+```
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
