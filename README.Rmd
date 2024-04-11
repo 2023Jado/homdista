@@ -20,28 +20,44 @@ knitr::opts_chunk$set(
 
 The purpose of homdista is to analyze the movements of objects, such as animals, based on collected GPS coordinates. This package provides several functions to calculate home range areas and distances traveled over months and years.
 
+```
 homdista::homdista(): Computes monthly and yearly utilized areas and distances walked.
 
-homdista::homekde(): Generates polygons representing the utilized areas for different groups.
+homdista::homekde(): Generates polygons representing the utilized areas.
 
 homdista::hodicor(): Calculates correlation values and visualizes the relationship between area and distance.
 
 homdista::distwalk(): Creates line paths to visualize the traveled distances.
 
 homdista::moveObject(): Converts a data frame into a move object for more detailed movement analysis.
+```
 
 ## Installation
 
-You can install the development version of homdista from [GitHub](https://github.com/) with:
+You can install the homdista package from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("2023Jado/homdista")
 ```
-
+## To effectively use homdista for data analysis, you will need to install and use the following additional packages
+```
+library(sp)
+library(sf)
+library(ade4)
+library(adehabitatMA)
+library(CircStats)
+library(adehabitatLT)
+library(adehabitatHR)
+library(lubridate)
+library(ggplot2)
+library(mapview)
+library(tidyr)
+library(move)
+```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+The following are basics examples for how each of the functions works:
 
 ```{r example}
 library(homdista)
