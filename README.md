@@ -14,8 +14,7 @@ over months and years.
 homdista::homdista(): Computes monthly and yearly utilized areas and
 distances walked.
 
-homdista::homekde(): Generates polygons representing the utilized areas
-for different groups.
+homdista::homekde(): Generates polygons representing the utilized areas.
 
 homdista::hodicor(): Calculates correlation values and visualizes the
 relationship between area and distance.
