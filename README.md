@@ -10,7 +10,7 @@ The purpose of homdista is to analyze the movements of objects, such as
 animals, based on collected GPS coordinates. This package provides
 several functions to calculate home range areas and distances traveled
 over months and years.
-
+```
 homdista::homdista(): Computes monthly and yearly utilized areas and
 distances walked.
 
@@ -25,6 +25,7 @@ distances.
 
 homdista::moveObject(): Converts a data frame into a move object for
 more detailed movement analysis.
+```
 
 ## Installation
 
