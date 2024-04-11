@@ -33,7 +33,7 @@ These functions are:
 These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
 }
 \examples{
-file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
+file <- read.csv("data.csv", header=T)
 
 #Run the following libraries
 library(sp)

@@ -18,7 +18,7 @@ correlation values
 Correlation between the area utilized and traveled distance
 }
 \examples{
- file <- read.csv("C:/Users/Jado/Documents/EAGLE/Semester 2/Data/data.csv", header=T)
+ file <- read.csv("data.csv", header=T)
 
  # Define some parameters
  tf <- "\%m/\%d/\%y \%I:\%M \%p"

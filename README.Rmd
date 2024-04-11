@@ -18,19 +18,17 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of homdista is to analyze the movements of any objects by calculating the utilized home range areas and walked distances per month and year. The package offers a suite of functions for this purpose as follows:
+The purpose of homdista is to analyze the movements of objects, such as animals, based on collected GPS coordinates. This package provides several functions to calculate home range areas and distances traveled over months and years.
 
-homdista::homdista(): Computes the area utilized and distance walked per month and year.
+homdista::homdista(): Computes monthly and yearly utilized areas and distances walked.
 
-homdista::homekde(): Generates polygons representing the utilized areas for each group.
+homdista::homekde(): Generates polygons representing the utilized areas for different groups.
 
-homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
+homdista::hodicor(): Calculates correlation values and visualizes the relationship between area and distance.
 
-homdista::distwalk(): Generates line paths representing the traveled distance.
+homdista::distwalk(): Creates line paths to visualize the traveled distances.
 
-homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
-
-These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
+homdista::moveObject(): Converts a data frame into a move object for more detailed movement analysis.
 
 ## Installation
 
