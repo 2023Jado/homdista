@@ -19,7 +19,7 @@ distwalk(file, tf, crs_epsg, Id_name)
 movement paths
 }
 \description{
-Traveled distance
+Arguments
 }
 \examples{
 file <- read.csv("data.csv", header=T)

@@ -15,7 +15,7 @@ hodicor(adista, cormethod)
 correlation values
 }
 \description{
-Correlation between the area utilized and traveled distance
+Arguments
 }
 \examples{
  file <- read.csv("data.csv", header=T)

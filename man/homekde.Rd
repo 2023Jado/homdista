@@ -23,7 +23,7 @@ homekde(file, tf, crs_epsg, Id_name, perc, parh)
 home range polygons
 }
 \description{
-Home range spatial polygons
+Arguments
 }
 \examples{
 file <- read.csv("data.csv", header=T)

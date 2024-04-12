@@ -1,5 +1,6 @@
 #' Traveled distance
 #'
+#'Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
 #' @param crs_epsg the epsg code related to the dataset coordinates

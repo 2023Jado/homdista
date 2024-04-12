@@ -1,25 +1,29 @@
+Home range utilization and traveled distance within a time
+================
+
+- [homdista package](#homdista-package)
+  - [Installation](#installation)
+  - [homdista functions](#homdista-functions)
+  - [Arguments](#arguments)
+  - [Additional packages](#additional-packages)
+  - [Example](#example)
+  - [References](#references)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# homdista
+# homdista package
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The purpose of homdista is to analyze the movements of objects, such as
-animals, based on collected GPS coordinates. This package provides
-several functions to calculate home range areas and distances traveled
-over months and years.
-
-    homdista::homdista(): Computes monthly and yearly utilized areas and distances walked.
-
-    homdista::homekde(): Generates polygons representing the utilized areas.
-
-    homdista::hodicor(): Calculates correlation values and visualizes the relationship between area and distance.
-
-    homdista::distwalk(): Creates line paths to visualize the traveled distances.
-
-    homdista::moveObject(): Converts a data frame into a move object for more detailed movement analysis.
+The homdista package is designed to analyze the movement patterns of
+objects, like animals, using recorded GPS coordinates. This toolkit
+offers various functions to compute home range areas and distances
+traveled over extended periods, months and years. To determine home
+range, the package employs a kernel density estimator, requiring users
+to specify the bandwidth themselves. For distance estimation, the
+package utilizes the st_distance function to link all points in
+chronological order based on their timestamps.
 
 ## Installation
 
@@ -31,79 +35,143 @@ with:
 devtools::install_github("2023Jado/homdista")
 ```
 
-## To effectively use homdista for data analysis, you will need to install and use the following additional packages
+## homdista functions
 
-    library(ggplot2)
-    library(mapview)
+    # Computes monthly and yearly utilized areas and distances walked
+    homdista(file, tf, crs_epsg, Id_name, perc, parh)
+
+    # Generates polygons representing the utilized areas
+    homekde(file, tf, crs_epsg, Id_name, perc, parh)
+
+    # Calculates correlation values and visualizes the relationship between area and distance
+    hodicor(adista, cormethod)
+
+    # Creates line paths to visualize the traveled distances
+    distwalk(file, tf, crs_epsg, Id_name)
+
+    # Converts a data frame into a move object for more detailed movement analysis
+    moveObject(file, tf, Id_name, crs_epsg)
+
+## Arguments
+
+    file          R-imported dataframe which comprises at least three columns: a longitude column labeled "x", 
+                  a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
+
+    tf            Timestamp format.
+
+    crs_epsg      EPSG code related to the dataset coordinates.
+
+    Id_name       Column name from dataset which shows different categories (e.g., different groups (group A, 
+                  group B, group C, ...)).
+
+    perc          The percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for 
+                  core areas, 75%, 90%, 95%, ...).
+                  
+    parh          Bandwidth or smoothing parameter.
+
+    adista        A layer containing the area and distances values generated from the homdista function.
+
+    cormethod     Correlation method between paired samples (pearson", "kendall", or "spearman") at 
+                  confidence level of 95%.
+
+## Additional packages
+
+    library(sp)
+    library(sf)
+    library(ade4)
+    library(adehabitatMA)
+    library(CircStats)
+    library(adehabitatLT)
+    library(adehabitatHR)
+    library(lubridate)
     library(tidyr)
+    library(mapview)
+    library(ggplot2)
     library(move)
 
 ## Example
 
 The following are basic examples for how each of the functions works:
 
-``` r
-options(warn = -1)
-library(homdista)
-## Additional packages
-library(sp)
-library(sf)
-#> Linking to GEOS 3.11.2, GDAL 3.7.2, PROJ 9.3.0; sf_use_s2() is TRUE
-library(ade4)
-library(adehabitatMA)
-#> Registered S3 methods overwritten by 'adehabitatMA':
-#>   method                       from
-#>   print.SpatialPixelsDataFrame sp  
-#>   print.SpatialPixels          sp
-library(CircStats)
-#> Loading required package: MASS
-#> Loading required package: boot
-library(adehabitatLT)
-library(adehabitatHR)
-library(lubridate)
-#> 
-#> Attaching package: 'lubridate'
-#> The following objects are masked from 'package:base':
-#> 
-#>     date, intersect, setdiff, union
-library(tidyr)
+1.  Home range estimation and walked distance calculation
 
-## Home range area (with Kernel density estimator) and walked distance calculation
-file <- read.csv("data.csv", header = T)
-area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
-#> Deleting KDE result for 7 2009 elephant due to fewer than 5 relocations.
-#> Deleting subset for 7 2009 elephant due to fewer than 5 relocations.
+<!-- -->
 
-head(area_distance)
-#>   Month Year       Id      Distance_km  Area_km2
-#> 1     1 2010 elephant 4214388.24853781  14.70935
-#> 2     1 2013 elephant 11125730.8726069 415.80637
-#> 3     1 2014 elephant 11881704.5000014 189.73659
-#> 4     1 2016 elephant 2775637.76426774  95.63485
-#> 5     1 2017 elephant 2163398.18108898 420.97294
-#> 6    10 2010 elephant 1740522.35195486 865.69368
-```
+    library(homdista)
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+    ## Read the file
+    file <- read.csv("data.csv", header = T)
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
+    ## Home range area (with Kernel density estimator) and walked distance calculation
+    area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
+    head(area_distance)
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+<img src="man/figures/README-area_distance.png" width="100%" />
 
-You can also embed plots, for example:
+2.  Generating spatial polygons for the home range areas
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+<!-- -->
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+    ## Generates polygons representing the utilized areas
+    homerange <- homekde(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
+
+    # Convert "sp" object to "sf"
+    Homerange <- st_as_sf(homerange)
+
+    # Define a palette for colors
+    palette <- rainbow(length(unique(Homerange$Id)))
+
+    #Create map with mapview
+    mapview(Homerange, zcol = "Id", col.regions = palette, legend = TRUE, legend.title = "", legend.values = unique(Homerange$Id))
+
+<img src="man/figures/README-Homerange.png" width="100%" />
+
+3.  Get correlation values and plot the relationship between area and
+    distance values
+
+<!-- -->
+
+    ## Home range area (with Kernel density estimator) and walked distance calculation
+    area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
+
+    ## Correlation values and plot the relationship between area and distance values using spearman method
+    Correlation <- hodicor(area_distance, "spearman")
+
+<img src="man/figures/README-Correlation.png" width="100%" />
+
+    Correlation
+
+<img src="man/figures/README-Corr.png" width="100%" />
+
+4.  Get the line paths to visualize the traveled distances
+
+<!-- -->
+
+    Distance <- distwalk(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
+
+    mapview(Distance)
+
+<img src="man/figures/README-Distance.png" width="100%" />
+
+5.  Converts a data frame into a move object for more detailed movement
+    analysis
+
+<!-- -->
+
+    Move <- moveObject(file, "%m/%d/%y %I:%M %p", "Animal", 32734)
+
+    mapview(Move)
+
+<img src="man/figures/README-Move.png" width="100%" />
+
+## References
+
+    1. Fleming, C. H., & Calabrese, J. M. (2017). A new kernel density estimator for accurate home‐range and species‐range area estimation. Methods in Ecology and Evolution, 8(5), 571-579.
+
+    2. Calenge, C. (2011). Home range estimation in R: the adehabitatHR package. Office national de la classe et de la faune sauvage: Saint Benoist, Auffargis, France.
+
+    3. Wu, X., Roy, U., Hamidi, M., & Craig, B. N. (2020). Estimate travel time of ships in narrow channel based on AIS data. Ocean Engineering, 202, 106790.
+
+    4. Pebesma, E. J. (2018). Simple features for R: standardized support for spatial vector data. R J., 10(1), 439.
+
+    5. Urbano, F., Basille, M., & Racine, P. (2014). From Points to Habitat: Relating Environmental Information to GPS Positions. Spatial Database for GPS Wildlife Tracking Data: A Practical Guide to Creating a Data Management System with PostgreSQL/PostGIS and R, 75-93.
