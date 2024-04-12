@@ -106,7 +106,7 @@ The following are basic examples for how each of the functions works:
     area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
     head(area_distance)
 
-<img src="man/figures/README-area_distance.png" width="100%" />
+<img src="man/figures/README-area_dist.png" width="100%" />
 
 2.  Generating spatial polygons for the home range areas
 
