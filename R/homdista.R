@@ -8,7 +8,7 @@
 #'(4) homdista::distwalk(): Generates line paths representing the traveled distance.
 #'(5) homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
 #'These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
-#
+#'
 #'Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
