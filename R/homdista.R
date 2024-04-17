@@ -20,7 +20,8 @@
 #' @export
 #'
 #' @examples
-#' file <- read.csv("data.csv", header=T)
+#' file_path <- system.file("extdata", "data.csv", package = "homdista")
+#' file <- read.csv(file_path, header=T)
 #'
 #'#Run the following libraries
 #'library(sp)
@@ -41,11 +42,13 @@
 #'Id_name <- "Animal"
 #'crs_epsg <- 32734
 #'perc <- 95
+#'parh <- 500
 #'
 #'library(homdista)
 #'
 #'# Compute the area utilized and distance traveled by elephant
-#'area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
+#'area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
+#'head(area_distance)
 #'
 homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
@@ -75,10 +78,7 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
    ############################ Calculations of home range ##################################################
 
-  # Get unique names from df_move$Code
-  unique_names <- unique(df_move$Code)
-
-  # Initialize an empty list to store KDE results
+   # Initialize an empty list to store KDE results
   kde_list <- list()
 
   # Loop through each unique "code name"

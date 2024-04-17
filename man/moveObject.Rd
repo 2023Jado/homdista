@@ -22,8 +22,8 @@ move object
 Arguments
 }
 \examples{
-
-file <- read.csv("data.csv", header=T)
+file_path <- system.file("extdata", "data.csv", package = "homdista")
+file <- read.csv(file_path, header=T)
 
  # Define some parameters
 tf <- "\%m/\%d/\%y \%I:\%M \%p"
@@ -34,7 +34,7 @@ perc <- 95
 library(homdista)
 
 #Make the move object from data frame
-moveObj <- homdista::moveObject(file, tf, Id_name, crs_epsg)
+moveObj <- moveObject(file, tf, Id_name, crs_epsg)
 
 #Check for some computations
 distance <- move::distance(moveObj)

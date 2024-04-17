@@ -11,18 +11,20 @@
 #' @export
 #'
 #' @examples
-#' file <- read.csv("data.csv", header=T)
+#' file_path <- system.file("extdata", "data.csv", package = "homdista")
+#' file <- read.csv(file_path, header=T)
 #'
 #' # Define some parameters
 #' tf <- "%m/%d/%y %I:%M %p"
 #' Id_name <- "Animal"
 #' crs_epsg <- 32734
 #' perc <- 95
+#' parh <- 500
 #'
 #' library(homdista)
 #'
 #' # Home range spatial polygons
-#' homerange <- homdista::homekde(file, tf, crs_epsg, Id_name, perc)
+#' homerange <- homekde(file, tf, crs_epsg, Id_name, perc, parh)
 #'
 #'  # Convert "sp" object to "sf"
 #'  homerange_sf <- st_as_sf(homerange)

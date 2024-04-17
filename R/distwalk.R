@@ -10,7 +10,8 @@
 #' @export
 #'
 #' @examples
-#' file <- read.csv("data.csv", header=T)
+#' file_path <- system.file("extdata", "data.csv", package = "homdista")
+#' file <- read.csv(file_path, header=T)
 #'
 #' # Define some parameters
 #'
@@ -22,7 +23,7 @@
 #' library(homdista)
 #'
 #' # Spatial lines (paths) showing traveled distance
-#' distance_paths <- homdista::distwalk(file, tf, crs_epsg, Id_name)
+#' distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
 #' mapview(distance_paths)
 #'
 distwalk <- function(file, tf, crs_epsg, Id_name){

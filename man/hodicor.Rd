@@ -18,18 +18,20 @@ correlation values
 Arguments
 }
 \examples{
- file <- read.csv("data.csv", header=T)
+file_path <- system.file("extdata", "data.csv", package = "homdista")
+ file <- read.csv(file_path, header=T)
 
  # Define some parameters
  tf <- "\%m/\%d/\%y \%I:\%M \%p"
  Id_name <- "Animal"
  crs_epsg <- 32734
  perc <- 95
+ parh <- 500
 
  library(homdista)
 
  # Compute the area utilized and distance traveled by elephant
- area_distance <- homdista::homdista(file, tf, crs_epsg, Id_name, perc)
+ area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
 
  # Check the correlation between area used and traveled distance using "spearman method"
  corr_home_distance <- homdista::hodicor(area_distance, "spearman")
