@@ -1,15 +1,15 @@
 #' Estimating Utilized Habitat Area Using Kernel Density Estimation (KDE) and Calculating Traveled Distance
 #'
-#'The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance,
-#'These functions are:
-#'(1) homdista::homdista(): Computes the area utilized and distance walked per month and year.
-#'(2) homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/etc..
-#'(3) homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
-#'(4) homdista::distwalk(): Generates line paths representing the traveled distance.
-#'(5) homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
-#'These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
+#' The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance,
+#' These functions are:
+#' (1) homdista::homdista(): Computes the area utilized and distance walked per month and year.
+#' (2) homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/etc..
+#' (3) homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
+#' (4) homdista::distwalk(): Generates line paths representing the traveled distance.
+#' (5) homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
+#' These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
 #'
-#'Arguments
+#' Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
 #' @param crs_epsg the epsg code related to the dataset coordinates
@@ -23,32 +23,29 @@
 #' file_path <- system.file("extdata", "data.csv", package = "homdista")
 #' file <- read.csv(file_path, header=T)
 #'
-#'#Run the following libraries
-#'library(sp)
-#'library(sf)
-#'library(ade4)
-#'library(adehabitatMA)
-#'library(CircStats)
-#'library(adehabitatLT)
-#'library(adehabitatHR)
-#'library(lubridate)
-#'library(ggplot2)
-#'library(mapview)
-#'library(tidyr)
-#'library(move)
+#' #Run the following libraries
+#' library(sp)
+#' library(sf)
+#' library(ade4)
+#' library(adehabitatMA)
+#' library(CircStats)
+#' library(adehabitatLT)
+#' library(adehabitatHR)
+#' library(lubridate)
+#' library(tidyr)
 #'
 #' # Define some parameters
-#'tf <- "%m/%d/%y %I:%M %p"
-#'Id_name <- "Animal"
-#'crs_epsg <- 32734
-#'perc <- 95
-#'parh <- 500
+#' tf <- "%m/%d/%y %I:%M %p"
+#' Id_name <- "Animal"
+#' crs_epsg <- 32734
+#' perc <- 95
+#' parh <- 500
 #'
-#'library(homdista)
+#' library(homdista)
 #'
-#'# Compute the area utilized and distance traveled by elephant
-#'area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
-#'head(area_distance)
+#' # Compute the area utilized and distance traveled by elephant
+#' area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
+#' head(area_distance)
 #'
 homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
 

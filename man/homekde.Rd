@@ -29,13 +29,6 @@ Arguments
 file_path <- system.file("extdata", "data.csv", package = "homdista")
 file <- read.csv(file_path, header=T)
 
-# Define some parameters
-tf <- "\%m/\%d/\%y \%I:\%M \%p"
-Id_name <- "Animal"
-crs_epsg <- 32734
-perc <- 95
-parh <- 500
-
 #Run the following libraries
 library(sp)
 library(sf)
@@ -47,14 +40,25 @@ library(adehabitatHR)
 library(lubridate)
 library(mapview)
 library(tidyr)
+library(webshot)
+
+# Define some parameters
+tf <- "\%m/\%d/\%y \%I:\%M \%p"
+Id_name <- "Animal"
+crs_epsg <- 32734
+perc <- 95
+parh <- 500
 
 library(homdista)
 
 # Home range spatial polygons
 homerange <- homekde(file, tf, crs_epsg, Id_name, perc, parh)
+homerange
 
- # Convert "sp" object to "sf"
- homerange_sf <- st_as_sf(homerange)
+# Convert "sp" object to "sf"
+homerange_sf <- st_as_sf(homerange)
+
+ plot(homerange_sf)
 
 # Define a palette for colors
 palette <- rainbow(length(unique(homerange_sf$Id)))

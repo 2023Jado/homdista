@@ -1,6 +1,6 @@
 #' Correlation between the area utilized and traveled distance
 #'
-#'Arguments
+#' Arguments
 #' @param adista a layer containing the area and distances values generated from the homdista function
 #' @param cormethod correlation method between paired samples (pearson", "kendall", or "spearman")
 #'
@@ -11,33 +11,34 @@
 #' file_path <- system.file("extdata", "data.csv", package = "homdista")
 #'  file <- read.csv(file_path, header=T)
 #'
-#'  # Define some parameters
-#'  tf <- "%m/%d/%y %I:%M %p"
-#'  Id_name <- "Animal"
-#'  crs_epsg <- 32734
-#'  perc <- 95
-#'  parh <- 500
+#' #Run the following libraries
+#' library(sp)
+#' library(sf)
+#' library(ade4)
+#' library(adehabitatMA)
+#' library(CircStats)
+#' library(adehabitatLT)
+#' library(adehabitatHR)
+#' library(lubridate)
+#' library(ggplot2)
+#' library(tidyr)
 #'
-#'  #'#Run the following libraries
-#'library(sp)
-#'library(sf)
-#'library(ade4)
-#'library(adehabitatMA)
-#'library(CircStats)
-#'library(adehabitatLT)
-#'library(adehabitatHR)
-#'library(lubridate)
-#'library(ggplot2)
-#'library(tidyr)
 #'
-#'  library(homdista)
+#' # Define some parameters
+#' tf <- "%m/%d/%y %I:%M %p"
+#' Id_name <- "Animal"
+#' crs_epsg <- 32734
+#' perc <- 95
+#' parh <- 500
 #'
-#'  # Compute the area utilized and distance traveled by elephant
-#'  area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
+#' library(homdista)
 #'
-#'  # Check the correlation between area used and traveled distance using "spearman method"
-#'  corr_home_distance <- homdista::hodicor(area_distance, "spearman")
+#' # Compute the area utilized and distance traveled by elephant
+#' area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
 #'
+#' # Check the correlation between area used and traveled distance using "spearman method"
+#' corr_home_distance <- hodicor(area_distance, "spearman")
+#' corr_home_distance
 #'
 #'
 hodicor <- function(adista, cormethod){

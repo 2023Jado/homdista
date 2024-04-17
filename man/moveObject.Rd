@@ -25,26 +25,27 @@ Arguments
 file_path <- system.file("extdata", "data.csv", package = "homdista")
 file <- read.csv(file_path, header=T)
 
- # Define some parameters
-tf <- "\%m/\%d/\%y \%I:\%M \%p"
-Id_name <- "Animal"
-crs_epsg <- 32734
-perc <- 95
-
-#'#Run the following libraries
+#Run the following libraries
 library(sp)
 library(sf)
 library(lubridate)
 library(mapview)
 library(move)
+library(webshot)
+
+# Define some parameters
+tf <- "\%m/\%d/\%y \%I:\%M \%p"
+Id_name <- "Animal"
+crs_epsg <- 32734
+perc <- 95
+
 
 library(homdista)
 
 #Make the move object from data frame
-moveObj <- moveObject(file, tf, Id_name, crs_epsg)
+Move <- moveObject(file, tf, Id_name, crs_epsg)
+plot(Move)
+mapview(Move)
 
-#Check for some computations
-distance <- move::distance(moveObj)
-angle <- move::angle(moveObj)
 
 }

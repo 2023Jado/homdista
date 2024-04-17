@@ -25,6 +25,14 @@ Arguments
 file_path <- system.file("extdata", "data.csv", package = "homdista")
 file <- read.csv(file_path, header=T)
 
+#Run the following libraries
+library(sp)
+library(sf)
+library(lubridate)
+library(mapview)
+library(tidyr)
+library(webshot)
+
 # Define some parameters
 
 tf <- "\%m/\%d/\%y \%I:\%M \%p"
@@ -32,17 +40,13 @@ Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95
 
-#'#Run the following libraries
-library(sp)
-library(sf)
-library(lubridate)
-library(mapview)
-library(tidyr)
 
 library(homdista)
 
 # Spatial lines (paths) showing traveled distance
 distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
+distance_paths
+plot(distance_paths)
 mapview(distance_paths)
 
 }

@@ -48,10 +48,7 @@ library(CircStats)
 library(adehabitatLT)
 library(adehabitatHR)
 library(lubridate)
-library(ggplot2)
-library(mapview)
 library(tidyr)
-library(move)
 
 # Define some parameters
 tf <- "\%m/\%d/\%y \%I:\%M \%p"

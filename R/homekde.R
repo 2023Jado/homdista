@@ -1,6 +1,6 @@
 #' Home range spatial polygons
 #'
-#'Arguments
+#' Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
 #' @param crs_epsg the epsg code related to the dataset coordinates
@@ -14,6 +14,19 @@
 #' file_path <- system.file("extdata", "data.csv", package = "homdista")
 #' file <- read.csv(file_path, header=T)
 #'
+#' #Run the following libraries
+#' library(sp)
+#' library(sf)
+#' library(ade4)
+#' library(adehabitatMA)
+#' library(CircStats)
+#' library(adehabitatLT)
+#' library(adehabitatHR)
+#' library(lubridate)
+#' library(mapview)
+#' library(tidyr)
+#' library(webshot)
+#'
 #' # Define some parameters
 #' tf <- "%m/%d/%y %I:%M %p"
 #' Id_name <- "Animal"
@@ -21,25 +34,16 @@
 #' perc <- 95
 #' parh <- 500
 #'
-#'#Run the following libraries
-#'library(sp)
-#'library(sf)
-#'library(ade4)
-#'library(adehabitatMA)
-#'library(CircStats)
-#'library(adehabitatLT)
-#'library(adehabitatHR)
-#'library(lubridate)
-#'library(mapview)
-#'library(tidyr)
-#'
 #' library(homdista)
 #'
 #' # Home range spatial polygons
 #' homerange <- homekde(file, tf, crs_epsg, Id_name, perc, parh)
+#' homerange
 #'
-#'  # Convert "sp" object to "sf"
-#'  homerange_sf <- st_as_sf(homerange)
+#' # Convert "sp" object to "sf"
+#' homerange_sf <- st_as_sf(homerange)
+#'
+#'  plot(homerange_sf)
 #'
 #' # Define a palette for colors
 #' palette <- rainbow(length(unique(homerange_sf$Id)))
