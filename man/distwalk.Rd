@@ -32,6 +32,13 @@ Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95
 
+#'#Run the following libraries
+library(sp)
+library(sf)
+library(lubridate)
+library(mapview)
+library(tidyr)
+
 library(homdista)
 
 # Spatial lines (paths) showing traveled distance

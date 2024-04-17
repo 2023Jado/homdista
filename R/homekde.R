@@ -21,6 +21,18 @@
 #' perc <- 95
 #' parh <- 500
 #'
+#'#Run the following libraries
+#'library(sp)
+#'library(sf)
+#'library(ade4)
+#'library(adehabitatMA)
+#'library(CircStats)
+#'library(adehabitatLT)
+#'library(adehabitatHR)
+#'library(lubridate)
+#'library(mapview)
+#'library(tidyr)
+#'
 #' library(homdista)
 #'
 #' # Home range spatial polygons
