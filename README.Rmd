@@ -72,21 +72,7 @@ adista        A layer containing the area and distances values generated from th
 cormethod     Correlation method between paired samples (pearson", "kendall", or "spearman") at 
               confidence level of 95%.
 ```
-## Additional packages
-```
-library(sp)
-library(sf)
-library(ade4)
-library(adehabitatMA)
-library(CircStats)
-library(adehabitatLT)
-library(adehabitatHR)
-library(lubridate)
-library(tidyr)
-library(mapview)
-library(ggplot2)
-library(move)
-```
+
 ## Example
 
 The following are basic examples for how each of the functions works:
@@ -107,6 +93,11 @@ head(area_distance)
 
 2. Generating spatial polygons for the home range areas
 ```
+library(homdista)
+#Additional libraries
+library(sf)
+library(mapview)
+
 ## Generates polygons representing the utilized areas
 homerange <- homekde(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
 
@@ -123,6 +114,8 @@ mapview(Homerange, zcol = "Id", col.regions = palette, legend = TRUE, legend.tit
 
 3. Get correlation values and plot the relationship between area and distance values
 ```
+library(homdista)
+
 ## Home range area (with Kernel density estimator) and walked distance calculation
 area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
 
@@ -139,6 +132,11 @@ Correlation
 4. Get the line paths to visualize the traveled distances
 
 ```
+library(homdista)
+
+#Additional library
+library(mapview)
+
 Distance <- distwalk(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
 ```
 ```
@@ -148,6 +146,12 @@ mapview(Distance)
 
 5. Converts a data frame into a move object for more detailed movement analysis
 ```
+library(homdista)
+
+#Additional libraries
+library(sf)
+library(mapview)
+
 Move <- moveObject(file, "%m/%d/%y %I:%M %p", "Animal", 32734)
 ```
 ```

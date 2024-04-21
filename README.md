@@ -5,7 +5,6 @@ Home range utilization and traveled distance within a time
   - [Installation](#installation)
   - [homdista functions](#homdista-functions)
   - [Arguments](#arguments)
-  - [Additional packages](#additional-packages)
   - [Example](#example)
   - [References](#references)
 
@@ -74,21 +73,6 @@ devtools::install_github("2023Jado/homdista")
     cormethod     Correlation method between paired samples (pearson", "kendall", or "spearman") at 
                   confidence level of 95%.
 
-## Additional packages
-
-    library(sp)
-    library(sf)
-    library(ade4)
-    library(adehabitatMA)
-    library(CircStats)
-    library(adehabitatLT)
-    library(adehabitatHR)
-    library(lubridate)
-    library(tidyr)
-    library(mapview)
-    library(ggplot2)
-    library(move)
-
 ## Example
 
 The following are basic examples for how each of the functions works:
@@ -112,6 +96,11 @@ The following are basic examples for how each of the functions works:
 
 <!-- -->
 
+    library(homdista)
+    #Additional libraries
+    library(sf)
+    library(mapview)
+
     ## Generates polygons representing the utilized areas
     homerange <- homekde(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
 
@@ -131,6 +120,8 @@ The following are basic examples for how each of the functions works:
 
 <!-- -->
 
+    library(homdista)
+
     ## Home range area (with Kernel density estimator) and walked distance calculation
     area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
 
@@ -147,6 +138,11 @@ The following are basic examples for how each of the functions works:
 
 <!-- -->
 
+    library(homdista)
+
+    #Additional library
+    library(mapview)
+
     Distance <- distwalk(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
 
     mapview(Distance)
@@ -157,6 +153,12 @@ The following are basic examples for how each of the functions works:
     analysis
 
 <!-- -->
+
+    library(homdista)
+
+    #Additional libraries
+    library(sf)
+    library(mapview)
 
     Move <- moveObject(file, "%m/%d/%y %I:%M %p", "Animal", 32734)
 

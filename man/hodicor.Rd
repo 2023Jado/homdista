@@ -19,22 +19,9 @@ Arguments
 }
 \examples{
 file_path <- system.file("extdata", "data.csv", package = "homdista")
- file <- read.csv(file_path, header=T)
+file <- read.csv(file_path, header=T)
 
-#Run the following libraries
-library(sp)
-library(sf)
-library(ade4)
-library(adehabitatMA)
-library(CircStats)
-library(adehabitatLT)
-library(adehabitatHR)
-library(lubridate)
-library(ggplot2)
-library(tidyr)
-
-
-# Define some parameters
+# Define parameters
 tf <- "\%m/\%d/\%y \%I:\%M \%p"
 Id_name <- "Animal"
 crs_epsg <- 32734
@@ -49,6 +36,4 @@ area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
 # Check the correlation between area used and traveled distance using "spearman method"
 corr_home_distance <- hodicor(area_distance, "spearman")
 corr_home_distance
-
-
 }

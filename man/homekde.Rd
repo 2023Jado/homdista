@@ -29,20 +29,7 @@ Arguments
 file_path <- system.file("extdata", "data.csv", package = "homdista")
 file <- read.csv(file_path, header=T)
 
-#Run the following libraries
-library(sp)
-library(sf)
-library(ade4)
-library(adehabitatMA)
-library(CircStats)
-library(adehabitatLT)
-library(adehabitatHR)
-library(lubridate)
-library(mapview)
-library(tidyr)
-library(webshot)
-
-# Define some parameters
+# Define parameters
 tf <- "\%m/\%d/\%y \%I:\%M \%p"
 Id_name <- "Animal"
 crs_epsg <- 32734
@@ -50,6 +37,10 @@ perc <- 95
 parh <- 500
 
 library(homdista)
+#Additional libraries
+library(sf)
+library(mapview)
+library(webshot2)
 
 # Home range spatial polygons
 homerange <- homekde(file, tf, crs_epsg, Id_name, perc, parh)
@@ -65,6 +56,4 @@ palette <- rainbow(length(unique(homerange_sf$Id)))
 
 #Create map with mapview
 mapview(homerange_sf, zcol = "Id", col.regions = palette, legend = TRUE, legend.title = "", legend.values = unique(homerange_sf$Id))
-
-
 }

@@ -10,18 +10,11 @@
 #' @export
 #'
 #' @examples
-#'file_path <- system.file("extdata", "data.csv", package = "homdista")
+#'
+#' file_path <- system.file("extdata", "data.csv", package = "homdista")
 #' file <- read.csv(file_path, header=T)
 #'
-#' #Run the following libraries
-#' library(sp)
-#' library(sf)
-#' library(lubridate)
-#' library(mapview)
-#' library(move)
-#' library(webshot)
-#'
-#' # Define some parameters
+#' # Define parameters
 #' tf <- "%m/%d/%y %I:%M %p"
 #' Id_name <- "Animal"
 #' crs_epsg <- 32734
@@ -29,13 +22,21 @@
 #'
 #'
 #' library(homdista)
-#'
+#' #Additional libraries for plotting
+#' library(sf)
+#' library(mapview)
+#' library(webshot)
 #' #Make the move object from data frame
 #' Move <- moveObject(file, tf, Id_name, crs_epsg)
 #' plot(Move)
 #' mapview(Move)
-#'
-#'
+#' @import sp
+#' @import sf
+#' @import lubridate
+#' @import mapview
+#' @import move
+#' @import webshot
+
 moveObject <- function(file, tf, Id_name, crs_epsg){
   # Read the csv data
 
