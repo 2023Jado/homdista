@@ -35,9 +35,12 @@ perc <- 95
 
 library(homdista)
 #Additional libraries for plotting
+library(sp)
 library(sf)
 library(mapview)
 library(webshot)
+library(webshot2)
+
 #Make the move object from data frame
 Move <- moveObject(file, tf, Id_name, crs_epsg)
 plot(Move)

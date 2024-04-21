@@ -36,6 +36,7 @@ library(homdista)
 #Additional libraries
 library(mapview)
 library(webshot)
+library(webshot2)
 
 # Spatial lines (paths) showing traveled distance
 distance_paths <- distwalk(file, tf, crs_epsg, Id_name)

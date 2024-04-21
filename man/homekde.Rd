@@ -41,6 +41,7 @@ library(homdista)
 library(sf)
 library(mapview)
 library(webshot)
+library(webshot2)
 
 # Home range spatial polygons
 homerange <- homekde(file, tf, crs_epsg, Id_name, perc, parh)
