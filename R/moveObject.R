@@ -81,9 +81,14 @@ moveObject <- function(file, tf, Id_name, crs_epsg){
     crs = crs_epsg
   )
 
-  # Change the projection
-  crscode <- "crs_epsg"
-  crs(df_move) <- crscode
+  ######## Change the projection ###########
+  # Create a CRS object using the EPSG code
+  crs_epsgcode <- "crs_epsg"
+  crs_object <- CRS(paste0("+init=epsg:", crs_epsgcode))
+
+  # Set the proj4string attribute of df_move to the CRS object
+  proj4string(df_move) <- crs_object
+
   return(df_move)
 
 }
