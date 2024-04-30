@@ -23,8 +23,6 @@
 #' library(homdista)
 #' #Additional libraries
 #' library(mapview)
-#' library(webshot)
-#' library(webshot2)
 #'
 #' # Spatial lines (paths) showing traveled distance
 #' distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
@@ -36,8 +34,6 @@
 #' @import lubridate
 #' @import mapview
 #' @import tidyr
-#' @import webshot
-#' @import webshot2
 
 distwalk <- function(file, tf, crs_epsg, Id_name){
 

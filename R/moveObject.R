@@ -26,8 +26,6 @@
 #' library(sp)
 #' library(sf)
 #' library(mapview)
-#' library(webshot)
-#' library(webshot2)
 #'
 #' #Make the move object from data frame
 #' Move <- moveObject(file, tf, Id_name, crs_epsg)
@@ -38,8 +36,6 @@
 #' @import lubridate
 #' @import mapview
 #' @import move
-#' @import webshot
-#' @import webshot2
 
 moveObject <- function(file, tf, Id_name, crs_epsg){
   # Read the csv data

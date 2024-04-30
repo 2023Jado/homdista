@@ -25,8 +25,6 @@
 #' #Additional libraries
 #' library(sf)
 #' library(mapview)
-#' library(webshot)
-#' library(webshot2)
 #'
 #' # Home range spatial polygons
 #' homerange <- homekde(file, tf, crs_epsg, Id_name, perc, parh)
@@ -52,8 +50,6 @@
 #' @import lubridate
 #' @import mapview
 #' @import tidyr
-#' @import webshot
-#' @import webshot2
 
 homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
