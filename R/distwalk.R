@@ -1,5 +1,7 @@
 #' Traveled distance
 #'
+#' Connects all GPS points in the order of timestamps and computes the length of the distance
+#'
 #' Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
@@ -154,5 +156,8 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
   # Convert to sf object
   movement <- st_as_sf(lines_df)
 
-  return(movement)
+  # Split the column of "Code" into month, year and Id
+  movementsplit <- tidyr::separate(movement, Code, into = c("Month", "Year", "Id"), sep = " ")
+
+  return(movementsplit)
 }

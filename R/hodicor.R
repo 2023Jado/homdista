@@ -1,5 +1,7 @@
 #' Correlation between the area utilized and traveled distance
 #'
+#' Determine the correlation between the utilized home range size and traveled distance
+#'
 #' Arguments
 #' @param adista a layer containing the area and distances values generated from the homdista function
 #' @param cormethod correlation method between paired samples (pearson", "kendall", or "spearman")

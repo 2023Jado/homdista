@@ -1,5 +1,7 @@
 #' Home range spatial polygons
 #'
+#' Estimate the utilized home range size for each group/individual/etc..
+#'
 #' Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format

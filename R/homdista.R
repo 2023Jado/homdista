@@ -1,13 +1,6 @@
 #' Estimating Utilized Habitat Area Using Kernel Density Estimation (KDE) and Calculating Traveled Distance
 #'
-#' The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance,
-#' These functions are:
-#' (1) homdista::homdista(): Computes the area utilized and distance walked per month and year.
-#' (2) homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/etc..
-#' (3) homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
-#' (4) homdista::distwalk(): Generates line paths representing the traveled distance.
-#' (5) homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
-#' These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
+#' The homdista package provide comprehensive tools for analyzing movement patterns and habitat utilization. It estimates habitat utilization area and traveled distance overtime.
 #'
 #' Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.

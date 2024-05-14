@@ -19,6 +19,9 @@ distwalk(file, tf, crs_epsg, Id_name)
 movement paths
 }
 \description{
+Connects all GPS points in the order of timestamps and computes the length of the distance
+}
+\details{
 Arguments
 }
 \examples{

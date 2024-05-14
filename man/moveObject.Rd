@@ -19,6 +19,9 @@ moveObject(file, tf, Id_name, crs_epsg)
 move object
 }
 \description{
+Converts the data frame into a move object for further movement analysis.
+}
+\details{
 Arguments
 }
 \examples{

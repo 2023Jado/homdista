@@ -23,6 +23,9 @@ homekde(file, tf, crs_epsg, Id_name, perc, parh)
 home range polygons
 }
 \description{
+Estimate the utilized home range size for each group/individual/etc..
+}
+\details{
 Arguments
 }
 \examples{

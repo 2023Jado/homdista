@@ -15,6 +15,9 @@ hodicor(adista, cormethod)
 correlation values
 }
 \description{
+Determine the correlation between the utilized home range size and traveled distance
+}
+\details{
 Arguments
 }
 \examples{

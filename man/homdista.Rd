@@ -23,14 +23,7 @@ homdista(file, tf, crs_epsg, Id_name, perc, parh)
 home range area in km2 and traveled distance in km
 }
 \description{
-The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance,
-These functions are:
-(1) homdista::homdista(): Computes the area utilized and distance walked per month and year.
-(2) homdista::homekde(): Generates polygons representing the utilized areas for each group/individual/etc..
-(3) homdista::hodicor(): Computes correlation values and plots the correlation between area and distance.
-(4) homdista::distwalk(): Generates line paths representing the traveled distance.
-(5) homdista::moveObject(): Converts the data frame into a move object for further movement analysis.
-These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
+The homdista package provide comprehensive tools for analyzing movement patterns and habitat utilization. It estimates habitat utilization area and traveled distance overtime.
 }
 \details{
 Arguments

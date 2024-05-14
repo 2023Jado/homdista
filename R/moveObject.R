@@ -1,5 +1,7 @@
 #' Data frame to Move object
 #'
+#' Converts the data frame into a move object for further movement analysis.
+#'
 #' Arguments
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 #' @param tf timestamp format
