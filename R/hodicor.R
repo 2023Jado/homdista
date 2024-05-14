@@ -30,7 +30,6 @@
 #' @import sf
 #' @import ade4
 #' @import adehabitatMA
-#' @import CircStats
 #' @import adehabitatLT
 #' @import adehabitatHR
 #' @import lubridate
@@ -47,7 +46,7 @@ hodicor <- function(adista, cormethod){
   final_file$Distance_km <- as.numeric(final_file$Distance_km)
   final_file$Area_km2 <- as.numeric(final_file$Area_km2)
 
-    # Correlation
+  # Correlation
   correlation_dist_homer <- cor.test(as.numeric(final_file$Distance_km), as.numeric(final_file$Area_km2), method = cormethod,
                                      conf.level = 0.95)
 
@@ -67,5 +66,3 @@ hodicor <- function(adista, cormethod){
 
   return(correlation_dist_homer)
 }
-
-

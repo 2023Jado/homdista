@@ -44,7 +44,6 @@
 #' @import sf
 #' @import ade4
 #' @import adehabitatMA
-#' @import CircStats
 #' @import adehabitatLT
 #' @import adehabitatHR
 #' @import lubridate
@@ -165,7 +164,3 @@ homekde <- function(file, tf, crs_epsg, Id_name, perc, parh){
 
   return(homeshape)
 }
-
-
-
-

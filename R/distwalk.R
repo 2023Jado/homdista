@@ -156,5 +156,3 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
 
   return(movement)
 }
-
-

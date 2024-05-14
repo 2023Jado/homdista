@@ -39,7 +39,6 @@
 #' @import sf
 #' @import ade4
 #' @import adehabitatMA
-#' @import CircStats
 #' @import adehabitatLT
 #' @import adehabitatHR
 #' @import lubridate
@@ -54,7 +53,7 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Rename the column
   names(data_df)[which(names(data_df) == Id_name)] <- "groupid"
 
-   # Change the time format
+  # Change the time format
   data_df$time <- as.POSIXct(data_df$timestamp, format = tf, tz="UTC")
 
   # Remove the NA from data_df
@@ -71,9 +70,9 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Change the data frame to "sf" object
   df_move <- st_as_sf(no_na_df_sorted, coords = c("x", "y"), crs=crs_epsg)
 
-   ############################ Calculations of home range ##################################################
+  ############################ Calculations of home range ##################################################
 
-   # Initialize an empty list to store KDE results
+  # Initialize an empty list to store KDE results
   kde_list <- list()
 
   # Loop through each unique "code name"

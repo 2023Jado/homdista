@@ -1,5 +1,5 @@
 Package: homdista
-Title: Home range utilization and traveled distance within a time
+Title: Home range utilization and traveled distance per month and year
 Version: 0.0.0.9000
 Authors@R: 
     person("Jean de Dieu", "Tuyizere", , "tuyizjado1994@gmail.com", role = c("aut", "cre"),
@@ -13,3 +13,15 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Imports: 
+    ade4,
+    adehabitatHR,
+    adehabitatLT,
+    adehabitatMA,
+    ggplot2,
+    lubridate,
+    mapview,
+    move,
+    sf,
+    sp,
+    tidyr
