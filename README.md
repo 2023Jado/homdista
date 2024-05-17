@@ -1,4 +1,4 @@
-Home range utilization and traveled distance per month and year
+Home range utilization and traveled distance over time
 ================
 
 - [homdista package](#homdista-package)

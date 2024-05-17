@@ -1,5 +1,7 @@
 #' Estimating Utilized Habitat Area Using Kernel Density Estimation (KDE) and Calculating Traveled Distance
 #'
+#' @author Jean de Dieu Tuyizere
+#'
 #' The homdista package provide comprehensive tools for analyzing movement patterns and habitat utilization. It estimates habitat utilization area and traveled distance overtime.
 #'
 #' Arguments

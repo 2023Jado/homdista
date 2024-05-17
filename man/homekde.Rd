@@ -23,10 +23,7 @@ homekde(file, tf, crs_epsg, Id_name, perc, parh)
 home range polygons
 }
 \description{
-Estimate the utilized home range size for each group/individual/etc..
-}
-\details{
-Arguments
+Home range spatial polygons
 }
 \examples{
 file_path <- system.file("extdata", "data.csv", package = "homdista")
@@ -58,4 +55,11 @@ palette <- rainbow(length(unique(homerange_sf$Id)))
 
 #Create map with mapview
 mapview(homerange_sf, zcol = "Id", col.regions = palette, legend = TRUE, legend.title = "", legend.values = unique(homerange_sf$Id))
+}
+\author{
+Jean de Dieu Tuyizere
+
+Estimate the utilized home range size for each group/individual/etc..
+
+Arguments
 }

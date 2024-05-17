@@ -19,10 +19,7 @@ distwalk(file, tf, crs_epsg, Id_name)
 movement paths
 }
 \description{
-Connects all GPS points in the order of timestamps and computes the length of the distance
-}
-\details{
-Arguments
+Traveled distance
 }
 \examples{
 file_path <- system.file("extdata", "data.csv", package = "homdista")
@@ -44,4 +41,11 @@ distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
 distance_paths
 plot(distance_paths)
 mapview(distance_paths)
+}
+\author{
+Jean de Dieu Tuyizere
+
+Connects all GPS points in the order of timestamps and computes the length of the distance
+
+Arguments
 }

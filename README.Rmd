@@ -1,5 +1,5 @@
 ---
-title: "Home range utilization and traveled distance per month and year"
+title: "Home range utilization and traveled distance over time"
 output:
   github_document:
     toc: true

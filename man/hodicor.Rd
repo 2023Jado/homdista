@@ -15,10 +15,7 @@ hodicor(adista, cormethod)
 correlation values
 }
 \description{
-Determine the correlation between the utilized home range size and traveled distance
-}
-\details{
-Arguments
+Correlation between the area utilized and traveled distance
 }
 \examples{
 file_path <- system.file("extdata", "data.csv", package = "homdista")
@@ -39,4 +36,11 @@ area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
 # Check the correlation between area used and traveled distance using "spearman method"
 corr_home_distance <- hodicor(area_distance, "spearman")
 corr_home_distance
+}
+\author{
+Jean de Dieu Tuyizere
+
+Determine the correlation between the utilized home range size and traveled distance
+
+Arguments
 }

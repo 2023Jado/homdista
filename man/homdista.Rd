@@ -23,10 +23,7 @@ homdista(file, tf, crs_epsg, Id_name, perc, parh)
 home range area in km2 and traveled distance in km
 }
 \description{
-The homdista package provide comprehensive tools for analyzing movement patterns and habitat utilization. It estimates habitat utilization area and traveled distance overtime.
-}
-\details{
-Arguments
+Estimating Utilized Habitat Area Using Kernel Density Estimation (KDE) and Calculating Traveled Distance
 }
 \examples{
 file_path <- system.file("extdata", "data.csv", package = "homdista")
@@ -44,4 +41,11 @@ library(homdista)
 # Compute the area utilized and distance traveled by elephant
 area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
 head(area_distance)
+}
+\author{
+Jean de Dieu Tuyizere
+
+The homdista package provide comprehensive tools for analyzing movement patterns and habitat utilization. It estimates habitat utilization area and traveled distance overtime.
+
+Arguments
 }

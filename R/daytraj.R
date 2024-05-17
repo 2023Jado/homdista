@@ -1,5 +1,7 @@
 #' Traveled distance
 #'
+#' @author Jean de Dieu Tuyizere
+#'
 #' Connects all GPS points in the order of timestamps and computes the length of the distance per day.
 #'
 #' Arguments
