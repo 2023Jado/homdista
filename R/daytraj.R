@@ -143,10 +143,6 @@ daytraj <- function(file, tf, crs_epsg, Id_name){
                          geometry = do.call("c", lines_list),
                          row.names = NULL)
 
-  # Create a data frame with codes and corresponding lines
-  lines_df <- data.frame(Code = rep(codes, sapply(lines_list, length)),
-                         geometry = do.call("c", lines_list),
-                       row.names = NULL)
 
   # Convert to sf object
   movement <- st_as_sf(lines_df)
@@ -154,7 +150,11 @@ daytraj <- function(file, tf, crs_epsg, Id_name){
   # Split the column of "Code" into month, year and Id
   movementsplit <- tidyr::separate(movement, Code, into = c("Day", "Month", "Year", "Id"), sep = " ")
   movementsplit$Distance_km <- paste(traveled_distances_df$Distance_km)
+  movementsplit$Length_km <- st_length(movementsplit)/1000
+  movementsplit$Length_km <- gsub("\\s*\\[m\\]", "", movementsplit$Length_km)
+  Movementpath <- movementsplit[, c("Day", "Month", "Id", "Length_km")]
+  head(Movementpath)
 
-  return(movementsplit)
+  return(Movementpath)
 }
 

@@ -202,18 +202,64 @@ homdista <- function(file, tf, crs_epsg, Id_name, perc, parh){
   # Remove the "[m]" suffix from the "Distance_km" column
   traveled_distances_df$Distance_km <- gsub("\\s*\\[m\\]", "", traveled_distances_df$Distance_km)
 
+  # Merge the computed distances with the spatial data based on the 'Code' column
+  distamove <- merge(df_move_sorted, traveled_distances_df, by = "Code")
+
+  # Initialize an empty list to store paths and associated code name
+  lines_list <- list()
+  codes <- character(0)
+
+  # Loop through each code name
+  for (code in unique(distamove$Code)) {
+
+    group_df <- distamove[distamove$Code == code, ]
+    if (nrow(group_df) > 1) {
+      line <- st_cast(st_union(st_cast(group_df, "MULTIPOINT")), "LINESTRING")
+      lines_list[[code]] <- line
+      codes <- c(codes, code)  # Add code to codes vector
+    } else {
+      lines_list[[code]] <- NA  # Indicate missing lines
+    }
+  }
+
+  # Filter out NA values from codes and lines_list
+  codes <- codes[!is.na(lines_list)]
+  lines_list <- lines_list[!is.na(lines_list)]
+
+  # Create a data frame with codes and corresponding lines
+  lines_df <- data.frame(Code = rep(codes, sapply(lines_list, length)),
+                         geometry = do.call("c", lines_list),
+                         row.names = NULL)
+
+
+  # Convert to sf object
+  movement <- st_as_sf(lines_df)
+  movementsplit <- movement
+
+  # Split the column of "Code" into month, year and Id
+  movementsplit$Distance_km <- paste(traveled_distances_df$Distance_km)
+  movementsplit$Length_km <- st_length(movementsplit)/1000
+  movementsplit$Length_km <- gsub("\\s*\\[m\\]", "", movementsplit$Length_km)
+
+  Movepath_df <- as.data.frame(movementsplit)
+
+
   # ##################### Merge the homerange and distance columns #############################################
 
-  merged_distance_homerange <- merge(traveled_distances_df, home2, by="Code")
+  merged_distance_homerange <- merge(Movepath_df, home2, by="Code")
 
   # Splitting the Code column into three separate columns
   merged_distance_homerange_split <- tidyr::separate(merged_distance_homerange, Code, into = c("Month", "Year", "Id"), sep = " ")
 
+  # Subset to few needed columns
+  merged_distance_homerange_split <- merged_distance_homerange_split[, c("Month", "Year", "Id", "Length_km", "area")]
+
   # Change the name of area
-  names(merged_distance_homerange_split) <- c("Month", "Year", "Id", "Distance_km", "Area_km2")
+  names(merged_distance_homerange_split) <- c("Month", "Year", "Id", "Length_km", "Area_km2")
 
   # Final file ready for correlation analysis
   final_file <- merged_distance_homerange_split
+  head(final_file)
 
   return(final_file)
 }
