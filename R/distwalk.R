@@ -1,7 +1,6 @@
-#' @Title Traveled distance
+#' Monthly and yearly traveled distance
 #' @author Jean de Dieu Tuyizere
 #'
-#' @description
 #' Connects all GPS points in the order of timestamps and computes the length of the distance
 #'
 #' Arguments

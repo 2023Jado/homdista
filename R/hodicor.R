@@ -1,7 +1,6 @@
-#' @Title Correlation between the area utilized and traveled distance
+#' Correlation between the area utilized and traveled distance
 #' @author Jean de Dieu Tuyizere
 #'
-#' @description
 #' Determine the correlation between the utilized home range size and traveled distance
 #'
 #' Arguments

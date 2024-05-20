@@ -1,7 +1,6 @@
-#' @Title Daily traveled distance
+#' Daily traveled distance
 #' @author Jean de Dieu Tuyizere
 #'
-#' @description
 #' Connects all GPS points in the order of timestamps and computes the length of the distance per day.
 #'
 #' Arguments
@@ -25,17 +24,13 @@
 #'
 #'
 #' library(homdista)
-#' #Additional libraries
-#' library(mapview)
 #'
-#' # Spatial lines (paths) showing traveled distance
-#' distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
-#' distance_paths
+#' # Spatial lines (paths) showing daily traveled distance
+#' distance_paths <- daytraj(file, tf, crs_epsg, Id_name)
 #' head(distance_paths)
 #' @import sp
 #' @import sf
 #' @import lubridate
-#' @import mapview
 #' @import tidyr
 
 daytraj <- function(file, tf, crs_epsg, Id_name){

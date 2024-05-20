@@ -1,5 +1,5 @@
 Package: homdista
-Title: Home range utilization and traveled distance per month and year
+Title: Home range utilization and traveled distance over time
 Version: 0.0.0.9000
 Authors@R: 
     person("Jean de Dieu", "Tuyizere", , "tuyizjado1994@gmail.com", role = c("aut", "cre"),
