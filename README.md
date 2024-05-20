@@ -18,9 +18,9 @@ Home range utilization and traveled distance over time
 The homdista package is designed to analyze the movement patterns of
 objects, like animals, using recorded GPS coordinates. This toolkit
 offers various functions to compute home range areas and distances
-traveled over extended periods, months and years. To determine home
-range, the package employs a kernel density estimator, requiring users
-to specify the bandwidth themselves. For distance estimation, the
+traveled over extended periods, daily, monthly and yearly. To determine
+home range, the package employs a kernel density estimator, requiring
+users to specify the bandwidth themselves. For distance estimation, the
 package utilizes the st_distance function to link all points in
 chronological order based on their timestamps.
 
@@ -149,7 +149,17 @@ The following are basic examples for how each of the functions works:
 
 <img src="man/figures/README-Distance.png" width="100%" />
 
-5.  Converts a data frame into a move object for more detailed movement
+5.  Daily traveled distance
+
+<!-- -->
+
+    library(homdista)
+    Daily_distance <- daytraj(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
+    head(Daily_distance)
+
+<img src="man/figures/README-Daily.png" width="100%" />
+
+6.  Converts a data frame into a move object for more detailed movement
     analysis
 
 <!-- -->

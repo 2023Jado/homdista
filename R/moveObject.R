@@ -1,7 +1,7 @@
-#' Data frame to Move object
-#'
+#' @Title Data frame to Move object
 #' @author Jean de Dieu Tuyizere
 #'
+#' @description
 #' Converts the data frame into a move object for further movement analysis.
 #'
 #' Arguments

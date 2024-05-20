@@ -1,7 +1,7 @@
-#' Traveled distance
-#'
+#' @Title Traveled distance
 #' @author Jean de Dieu Tuyizere
 #'
+#' @description
 #' Connects all GPS points in the order of timestamps and computes the length of the distance
 #'
 #' Arguments
@@ -160,6 +160,7 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
 
   # Split the column of "Code" into month, year and Id
   movementsplit <- tidyr::separate(movement, Code, into = c("Month", "Year", "Id"), sep = " ")
+  movementsplit$Distance_km <- paste(traveled_distances_df$Distance_km)
 
   return(movementsplit)
 }

@@ -1,7 +1,7 @@
-#' Traveled distance
-#'
+#' @Title Daily traveled distance
 #' @author Jean de Dieu Tuyizere
 #'
+#' @description
 #' Connects all GPS points in the order of timestamps and computes the length of the distance per day.
 #'
 #' Arguments
@@ -10,7 +10,7 @@
 #' @param crs_epsg the epsg code related to the dataset coordinates
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
 #'
-#' @return movement paths
+#' @return Daily movement paths
 #' @export
 #'
 #' @examples
@@ -31,8 +31,7 @@
 #' # Spatial lines (paths) showing traveled distance
 #' distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
 #' distance_paths
-#' plot(distance_paths)
-#' mapview(distance_paths)
+#' head(distance_paths)
 #' @import sp
 #' @import sf
 #' @import lubridate
@@ -91,7 +90,7 @@ daytraj <- function(file, tf, crs_epsg, Id_name){
     num_relocations <- nrow(subset_data)
 
     # Proceed if there are at least 5 relocations
-    if (num_relocations >= 2) {
+    if (num_relocations >= 5) {
 
       # Calculate distance between consecutive points
       distances <- st_distance(subset_data)
@@ -149,8 +148,6 @@ daytraj <- function(file, tf, crs_epsg, Id_name){
                          geometry = do.call("c", lines_list),
                          row.names = NULL)
 
-
-
   # Create a data frame with codes and corresponding lines
   lines_df <- data.frame(Code = rep(codes, sapply(lines_list, length)),
                          geometry = do.call("c", lines_list),
@@ -159,9 +156,9 @@ daytraj <- function(file, tf, crs_epsg, Id_name){
   # Convert to sf object
   movement <- st_as_sf(lines_df)
 
-
   # Split the column of "Code" into month, year and Id
   movementsplit <- tidyr::separate(movement, Code, into = c("Day", "Month", "Year", "Id"), sep = " ")
+  movementsplit$Distance_km <- paste(traveled_distances_df$Distance_km)
 
   return(movementsplit)
 }

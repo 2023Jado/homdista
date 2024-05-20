@@ -1,7 +1,7 @@
-#' Home range spatial polygons
-#'
+#' @Title Home range spatial polygons
 #' @author Jean de Dieu Tuyizere
 #'
+#' @description
 #' Estimate the utilized home range size for each group/individual/etc..
 #'
 #' Arguments
