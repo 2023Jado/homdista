@@ -155,7 +155,7 @@ distwalk <- function(file, tf, crs_epsg, Id_name){
   movementsplit$Distance_km <- paste(traveled_distances_df$Distance_km)
   movementsplit$Length_km <- st_length(movementsplit)/1000
   movementsplit$Length_km <- gsub("\\s*\\[m\\]", "", movementsplit$Length_km)
-  Movementpath <- movementsplit[, c("Month", "Id", "Length_km")]
+  Movementpath <- movementsplit[, c("Month", "Year", "Id", "Length_km")]
   head(Movementpath)
 
   return(Movementpath)
