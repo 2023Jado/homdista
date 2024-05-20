@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Jean de Dieu", "Tuyizere", , "tuyizjado1994@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9516-9615"))
-Description: The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance, These functions include:homdista::homdista(): Computes the area utilized and distance walked per month and year, homdista::homekde(): Generates polygons representing the utilized areas for each group, homdista::hodicor(): Computes correlation values and plots the correlation between area and distance, homdista::distwalk(): Generates line paths representing the traveled distance, homdista::moveObject(): Converts the data frame into a move object for further movement analysis, These functions collectively provide comprehensive tools for analyzing movement patterns and habitat utilization.
+Description: The homdista package offers a suite of functions tailored for estimating habitat utilization area and traveled distance (daily, monthly, and yearly traveled distances), and converts the data frame into a move object for further movement analysis.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
