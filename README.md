@@ -145,7 +145,10 @@ The following are basic examples for how each of the functions works:
 
     Distance <- distwalk(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
 
-    mapview(Distance)
+    head(Distance)
+    mapview(Distance, zcol = "Id", col.regions = rainbow(length(unique(Distance$Id))), legend = TRUE, legend.title = " ", legend.values = unique(Distance$Id)))
+
+<img src="man/figures/README-Distance_table.png" width="100%" />
 
 <img src="man/figures/README-Distance.png" width="100%" />
 

@@ -30,9 +30,8 @@
 #'
 #' # Spatial lines (paths) showing traveled distance
 #' distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
-#' distance_paths
-#' plot(distance_paths)
-#' mapview(distance_paths)
+#' head(distance_paths)
+#' mapview(movementsplit, zcol = "Id", col.regions = rainbow(length(unique(movementsplit$Id))), legend = TRUE, legend.title = " ", legend.values = unique(movementsplit$Id)))
 #' @import sp
 #' @import sf
 #' @import lubridate
