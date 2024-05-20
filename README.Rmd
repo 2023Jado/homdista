@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The homdista package is designed to analyze the movement patterns of objects, like animals, using recorded GPS coordinates. This toolkit offers various functions to compute home range areas and distances traveled over extended periods, daily, monthly and yearly. To determine home range, the package employs a kernel density estimator, requiring users to specify the bandwidth themselves. For distance estimation, the package utilizes the st_distance function to link all points in chronological order based on their timestamps.
+The homdista package is designed to analyze the movement patterns of objects, like animals, using recorded GPS coordinates. This toolkit offers various functions to compute home range areas and distances traveled over extended periods, daily, monthly and yearly. To determine home range, the package employs a kernel density estimator, requiring users to specify the bandwidth themselves. For distance estimation, the package utilizes the st_length function to link all points in chronological order based on their timestamps.
 
 ## Installation
 

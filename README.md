@@ -21,7 +21,7 @@ offers various functions to compute home range areas and distances
 traveled over extended periods, daily, monthly and yearly. To determine
 home range, the package employs a kernel density estimator, requiring
 users to specify the bandwidth themselves. For distance estimation, the
-package utilizes the st_distance function to link all points in
+package utilizes the st_length function to link all points in
 chronological order based on their timestamps.
 
 ## Installation
