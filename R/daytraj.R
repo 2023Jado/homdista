@@ -85,7 +85,7 @@ daytraj <- function(file, tf, crs_epsg, Id_name){
     num_relocations <- nrow(subset_data)
 
     # Proceed if there are at least 5 relocations
-    if (num_relocations >= 5) {
+    if (num_relocations >= 2) {
 
       # Calculate distance between consecutive points
       distances <- st_distance(subset_data)
@@ -96,7 +96,7 @@ daytraj <- function(file, tf, crs_epsg, Id_name){
       # Store the distance for this code
       traveled_distances[[code]] <- total_distance
     } else {
-      cat("Deleting subset for", code, "due to fewer than 5 relocations.\n")
+      cat("Deleting subset for", code, "due to fewer than 2 relocations.\n")
 
       # Delete this subset from the dataset
       df_move_sorted <- df_move_sorted[df_move_sorted$Code != code, ]
