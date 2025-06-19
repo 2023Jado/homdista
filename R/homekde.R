@@ -215,6 +215,7 @@ homekde <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
   home2 <- home1[, c("Code", "area")]
 
   home3 <- tidyr::separate(home2, Code, into = c("Month", "Year", "Id"), sep = " ")
+  names(home3) <- c("Month", "Year", "Id", "area_km2")
 
   # Convert back to SpatialPolygonsDataFrame
 

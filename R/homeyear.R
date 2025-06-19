@@ -57,8 +57,6 @@
 
 homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
 
-  # Read the csv data
-
   data_df <- file
   names(data_df)[which(names(data_df) == Id_name)] <- "groupid"
   names(data_df)[which(names(data_df) == timestamp)] <- "timestamp"
@@ -134,9 +132,6 @@ homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
   df_move <- st_as_sf(no_na_df_sorted, coords = c("x", "y"), crs=crs_epsg)
 
   ############################ Calculations of home range ##################################################
-
-  # Get unique names from df_move$Code
-  unique_names <- unique(df_move$Code)
 
   # Initialize an empty list to store KDE results
   kde_list <- list()
@@ -214,6 +209,7 @@ homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
   home2 <- home1[, c("Code", "area")]
 
   home3 <- tidyr::separate(home2, Code, into = c("Year", "Id"), sep = " ")
+  names(home3) <- c("Year", "Id", "area_km2")
 
   # Convert back to SpatialPolygonsDataFrame
 
