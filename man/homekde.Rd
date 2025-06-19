@@ -4,16 +4,16 @@
 \alias{homekde}
 \title{Home range spatial polygons}
 \usage{
-homekde(file, tf, crs_epsg, Id_name, perc, parh)
+homekde(file, crs_epsg, Id_name, timestamp, perc, parh)
 }
 \arguments{
 \item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
 
-\item{tf}{timestamp format}
-
 \item{crs_epsg}{the epsg code related to the dataset coordinates}
 
 \item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
+
+\item{timestamp}{timestamp Column name from dataset which shows the time of the observation.}
 
 \item{perc}{The percentage utilized to calculate the KDE home range at a specific level (e.g., 50\% for core areas, 75\%, 90\%, 95\%, ...).}
 
@@ -30,7 +30,7 @@ file_path <- system.file("extdata", "data.csv", package = "homdista")
 file <- read.csv(file_path, header=T)
 
 # Define parameters
-tf <- "\%m/\%d/\%y \%I:\%M \%p"
+timestamp <- "timestamp"
 Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95
@@ -42,7 +42,7 @@ library(sf)
 library(mapview)
 
 # Home range spatial polygons
-homerange <- homekde(file, tf, crs_epsg, Id_name, perc, parh)
+homerange <- homekde(file, crs_epsg, Id_name, timestamp, perc, parh)
 homerange
 
 # Convert "sp" object to "sf"

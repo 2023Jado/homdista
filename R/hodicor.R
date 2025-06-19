@@ -4,6 +4,7 @@
 #' Determine the correlation between the utilized home range size and traveled distance
 #'
 #' Arguments
+#'
 #' @param adista a layer containing the area and distances values generated from the homdista function
 #' @param cormethod correlation method between paired samples (pearson", "kendall", or "spearman")
 #'
@@ -15,7 +16,7 @@
 #' file <- read.csv(file_path, header=T)
 #'
 #' # Define parameters
-#' tf <- "%m/%d/%y %I:%M %p"
+#' timestamp <- "timestamp"
 #' Id_name <- "Animal"
 #' crs_epsg <- 32734
 #' perc <- 95
@@ -24,7 +25,7 @@
 #' library(homdista)
 #'
 #' # Compute the area utilized and distance traveled by elephant
-#' area_distance <- homdista(file, tf, crs_epsg, Id_name, perc, parh)
+#' area_distance <- homdista(file, crs_epsg, Id_name, timestamp, perc, parh)
 #'
 #' # Check the correlation between area used and traveled distance using "spearman method"
 #' corr_home_distance <- hodicor(area_distance, "spearman")

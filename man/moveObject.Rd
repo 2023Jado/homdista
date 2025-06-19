@@ -4,16 +4,16 @@
 \alias{moveObject}
 \title{Data frame to Move object}
 \usage{
-moveObject(file, tf, Id_name, crs_epsg)
+moveObject(file, Id_name, timestamp, crs_epsg)
 }
 \arguments{
 \item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
 
-\item{tf}{timestamp format}
-
 \item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
 
-\item{crs_epsg}{timestamp format}
+\item{timestamp}{timestamp Column name from dataset which shows the time of the observation.}
+
+\item{crs_epsg}{the epsg code related to the dataset coordinates.}
 }
 \value{
 move object
@@ -27,7 +27,7 @@ file_path <- system.file("extdata", "data.csv", package = "homdista")
 file <- read.csv(file_path, header=T)
 
 # Define parameters
-tf <- "\%m/\%d/\%y \%I:\%M \%p"
+timestamp <- "timestamp"
 Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95
@@ -40,7 +40,7 @@ library(sf)
 library(mapview)
 
 #Make the move object from data frame
-Move <- moveObject(file, tf, Id_name, crs_epsg)
+Move <- moveObject(file, Id_name, timestamp, crs_epsg)
 plot(Move)
 mapview(Move)
 }

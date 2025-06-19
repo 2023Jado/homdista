@@ -4,10 +4,11 @@
 #' Connects all GPS points in the order of timestamps and computes the length of the distance per day.
 #'
 #' Arguments
+#'
 #' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
-#' @param tf timestamp format
-#' @param crs_epsg the epsg code related to the dataset coordinates
 #' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
+#' @param timestamp timestamp Column name from dataset which shows the time of the observation.
+#' @param crs_epsg the epsg code related to the dataset coordinates.
 #'
 #' @return Daily movement paths
 #' @export
@@ -17,7 +18,7 @@
 #' file <- read.csv(file_path, header=T)
 #'
 #' # Define some parameters
-#' tf <- "%m/%d/%y %I:%M %p"
+#' timestamp <- "timestamp"
 #' Id_name <- "Animal"
 #' crs_epsg <- 32734
 #' perc <- 95
@@ -26,24 +27,79 @@
 #' library(homdista)
 #'
 #' # Spatial lines (paths) showing daily traveled distance
-#' distance_paths <- daytraj(file, tf, crs_epsg, Id_name)
+#' distance_paths <- daytraj(file, Id_name, timestamp, crs_epsg)
 #' head(distance_paths)
 #' @import sp
 #' @import sf
 #' @import lubridate
 #' @import tidyr
+#' @import dplyr
+#' @import anytime
 
-daytraj <- function(file, tf, crs_epsg, Id_name){
+daytraj <- function(file, Id_name, timestamp, crs_epsg){
 
   # Read the csv data
 
   data_df <- file
-
-  # Rename the column
   names(data_df)[which(names(data_df) == Id_name)] <- "groupid"
+  names(data_df)[which(names(data_df) == timestamp)] <- "timestamp"
 
-  # Change the time format
-  data_df$time <- as.POSIXct(data_df$timestamp, format = tf, tz="UTC")
+  if (!("timestamp" %in% names(data_df))) {
+    stop("Error: 'timestamp' column not found in the data frame.")
+  }
+
+  timestamp_raw <- as.character(data_df$timestamp)
+  sample_timestamps <- timestamp_raw[!is.na(timestamp_raw) & timestamp_raw != ""]
+  if (length(sample_timestamps) == 0) {
+    stop("Error: 'timestamp' column is empty or contains only NA values.")
+  }
+
+  # Automatically recognize and parse the format of timestamp
+  formats_to_try <- c(
+    "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%SZ",
+    "%Y-%m-%d %H:%M:%OS", "%Y-%m-%dT%H:%M:%OS", "%Y-%m-%dT%H:%M:%OSZ",
+    "%Y-%m-%d", "%m/%d/%Y", "%d/%m/%Y", "%m-%d-%Y", "%d-%m-%Y",
+    "%m/%d/%Y %H:%M:%S", "%d/%m/%Y %H:%M:%S", "%m-%d-%Y %H:%M:%S", "%d-%m-%Y %H:%M:%S",
+    "%Y-%m-%d %I:%M:%S %p", "%m/%d/%Y %I:%M:%S %p", "%d/%m/%Y %I:%M:%S %p",
+    "%y-%m-%d %H:%M:%S", "%m/%d/%y %H:%M:%S", "%d/%m/%y %H:%M:%S",
+    "excel_serial"
+  )
+
+  parsed_time <- NULL
+  for (fmt in formats_to_try) {
+    if (fmt == "excel_serial") {
+      numeric_vals <- suppressWarnings(as.numeric(data_df$timestamp))
+      if (!all(is.na(numeric_vals)) && any(numeric_vals > 25000, na.rm = TRUE)) {
+        parsed_time <- as.POSIXct((as.numeric(timestamp_raw) - 25569) * 86400,
+                                  origin = "1970-01-01", tz = "UTC")
+        if (sum(!is.na(parsed_time)) > length(parsed_time) * 0.8) {
+          break
+        }
+      }
+    } else {
+      parsed_time <- suppressWarnings(as.POSIXct(sample_timestamps, format = fmt, tz = "UTC"))
+      success_rate <- sum(!is.na(parsed_time)) / length(sample_timestamps)
+      if (success_rate > 0.8) {
+        break
+      }
+    }
+  }
+
+  if (is.null(parsed_time) || sum(!is.na(parsed_time)) / length(sample_timestamps) <= 0.8) {
+    if (requireNamespace("anytime", quietly = TRUE)) {
+      parsed_time <- suppressWarnings(anytime::anytime(data_df$timestamp, tz = "UTC"))
+    } else if (requireNamespace("lubridate", quietly = TRUE)) {
+      parsed_time <- suppressWarnings(lubridate::parse_date_time(
+        timestamp_raw,
+        orders = c("ymd HMS", "mdy HMS", "dmy HMS", "ymd", "mdy", "dmy"),
+        tz = "UTC"
+      ))
+    } else {
+      stop("Unable to parse 'timestamp' column. Consider specifying format manually.")
+    }
+  }
+
+  data_df$time <- parsed_time
 
   # Remove the NA from data_df
   data_df_no_na <- na.omit(data_df)

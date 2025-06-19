@@ -36,26 +36,32 @@ devtools::install_github("2023Jado/homdista")
 ## homdista functions
 ```
 # Computes monthly and yearly utilized areas and distances walked
-homdista(file, tf, crs_epsg, Id_name, perc, parh)
+homdista(file, crs_epsg, Id_name, timestamp, perc, parh)
 
 # Generates polygons representing the utilized areas
-homekde(file, tf, crs_epsg, Id_name, perc, parh)
+homekde(file, crs_epsg, Id_name, timestamp, perc, parh)
 
 # Calculates correlation values and visualizes the relationship between area and distance
 hodicor(adista, cormethod)
 
 # Creates line paths to visualize the traveled distances
-distwalk(file, tf, crs_epsg, Id_name)
+distwalk(file, Id_name, timestamp, crs_epsg)
+
+# Creates the line paths to visualize the daily traveled distances
+daytraj(file, Id_name, timestamp, crs_epsg)
 
 # Converts a data frame into a move object for more detailed movement analysis
-moveObject(file, tf, Id_name, crs_epsg)
+moveObject(file, Id_name, timestamp, crs_epsg)
+
+# Generates the polygons representing the yearly utilized areas
+homeyear(file, crs_epsg, Id_name, timestamp, perc, parh)
 ```
 ## Arguments
 ```
 file          R-imported dataframe which comprises at least three columns: a longitude column labeled "x", 
               a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
 
-tf            Timestamp format.
+timestamp     timestamp Column name from dataset which shows the time of the observation.
 
 crs_epsg      EPSG code related to the dataset coordinates.
 
@@ -75,7 +81,7 @@ cormethod     Correlation method between paired samples (pearson", "kendall", or
 
 ## Example
 
-The following are basic examples for how each of the functions works:
+The following are basic examples for how some of the functions works:
 
 1. Home range estimation and walked distance calculation
 
@@ -83,10 +89,11 @@ The following are basic examples for how each of the functions works:
 library(homdista)
 
 ## Read the file
-file <- read.csv("data.csv", header = T)
+file_path <- system.file("extdata", "data.csv", package = "homdista")
+file <- read.csv(file_path, header=T)
 
 ## Home range area (with Kernel density estimator) and walked distance calculation
-area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
+area_distance <- homdista(file, 32734, "Animal", "timestamp", 95, 500)
 head(area_distance)
 ```
 <img src="man/figures/README-area_dist.png" width="100%" />
@@ -99,7 +106,7 @@ library(sf)
 library(mapview)
 
 ## Generates polygons representing the utilized areas
-homerange <- homekde(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
+homerange <- homekde(file, 32734, "Animal", "timestamp", 95, 500)
 
 # Convert "sp" object to "sf"
 Homerange <- st_as_sf(homerange)
@@ -117,7 +124,7 @@ mapview(Homerange, zcol = "Id", col.regions = palette, legend = TRUE, legend.tit
 library(homdista)
 
 ## Home range area (with Kernel density estimator) and walked distance calculation
-area_distance <- homdista(file ,"%m/%d/%y %I:%M %p", 32734, "Animal", 90, 500)
+area_distance <- homdista(file, 32734, "Animal", "timestamp", 95, 500)
 
 ## Correlation values and plot the relationship between area and distance values using spearman method
 Correlation <- hodicor(area_distance, "spearman")
@@ -137,7 +144,7 @@ library(homdista)
 #Additional library
 library(mapview)
 
-Distance <- distwalk(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
+Distance <- distwalk(file, "Animal", "timestamp", 32734)
 ```
 ```
 head(Distance)
@@ -150,7 +157,7 @@ mapview(Distance, zcol = "Id", col.regions = rainbow(length(unique(Distance$Id))
 5. Daily traveled distance
 ```
 library(homdista)
-Daily_distance <- daytraj(file, "%m/%d/%y %I:%M %p", 32734, "Animal")
+Daily_distance <- daytraj(file, "Animal", "timestamp", 32734)
 head(Daily_distance)
 ```
 <img src="man/figures/README-Daily.png" width="100%" />
@@ -163,7 +170,7 @@ library(homdista)
 library(sf)
 library(mapview)
 
-Move <- moveObject(file, "%m/%d/%y %I:%M %p", "Animal", 32734)
+Move <- moveObject(file, "Animal", "timestamp", 32734)
 ```
 ```
 mapview(Move)

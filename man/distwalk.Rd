@@ -4,16 +4,16 @@
 \alias{distwalk}
 \title{Monthly and yearly traveled distance}
 \usage{
-distwalk(file, tf, crs_epsg, Id_name)
+distwalk(file, Id_name, timestamp, crs_epsg)
 }
 \arguments{
 \item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
 
-\item{tf}{timestamp format}
-
-\item{crs_epsg}{the epsg code related to the dataset coordinates}
-
 \item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
+
+\item{timestamp}{timestamp Column name from dataset which shows the time of the observation.}
+
+\item{crs_epsg}{the epsg code related to the dataset coordinates.}
 }
 \value{
 movement paths
@@ -26,7 +26,7 @@ file_path <- system.file("extdata", "data.csv", package = "homdista")
 file <- read.csv(file_path, header=T)
 
 # Define some parameters
-tf <- "\%m/\%d/\%y \%I:\%M \%p"
+timestamp <- "timestamp"
 Id_name <- "Animal"
 crs_epsg <- 32734
 perc <- 95
@@ -37,7 +37,7 @@ library(homdista)
 library(mapview)
 
 # Spatial lines (paths) showing traveled distance
-distance_paths <- distwalk(file, tf, crs_epsg, Id_name)
+distance_paths <- distwalk(file, Id_name, timestamp, crs_epsg)
 head(distance_paths)
 mapview(movementsplit, zcol = "Id", col.regions = rainbow(length(unique(movementsplit$Id))), legend = TRUE, legend.title = " ", legend.values = unique(movementsplit$Id)))
 }
