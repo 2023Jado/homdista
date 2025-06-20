@@ -246,6 +246,7 @@ homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
   # Convert back to SpatialPolygonsDataFrame
 
   homeshape <- SpatialPolygonsDataFrame(home, home3)
+  homeshape <- st_as_sf(homeshape)
 
   return(homeshape)
 }
