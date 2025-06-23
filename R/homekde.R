@@ -252,6 +252,8 @@ homekde <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
   # Convert back to SpatialPolygonsDataFrame
 
   homeshape <- SpatialPolygonsDataFrame(home, home3)
+
+  # Changing to sf object
   homeshape <- st_as_sf(homeshape)
 
   return(homeshape)
