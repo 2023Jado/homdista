@@ -54,6 +54,8 @@
 #' @import lubridate
 #' @import mapview
 #' @import tidyr
+#' @import dplyr
+#' @import anytime
 
 homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
 
