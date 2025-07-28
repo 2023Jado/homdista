@@ -31,6 +31,12 @@ with:
 
 ``` r
 # install.packages("devtools")
+# If you don't have devtools installed, uncomment the line above to install it first
+library(devtools)
+# Sometimes you may need to install first "anytime" package before installing homdista
+# install.packages("anytime")
+# If you don't have the "anytime" package installed, uncomment the line above to install it first
+# Install the homdista package from GitHub
 devtools::install_github("2023Jado/homdista")
 ```
 
