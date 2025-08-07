@@ -62,6 +62,12 @@ devtools::install_github("2023Jado/homdista")
     # Generates the polygons representing the yearly utilized areas
     homeyear(file, crs_epsg, Id_name, timestamp, perc, parh)
 
+    # Compute the monthly utilized area overlaps
+    homoverlap(data, crs_epsg)
+
+    # Computes the yearly utilized area overlaps
+    yearoverlap(data, crs_epsg)
+
 ## Arguments
 
     file          R-imported dataframe which comprises at least three columns: a longitude column labeled "x", 

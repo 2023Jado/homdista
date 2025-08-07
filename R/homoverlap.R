@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' data <- homekde(file, crs_epsg, Id_name, timestamp, perc, parh)
-#' homeoverlap <- homoverlap(data, crs_epsg)
+#' homeoverlap <- homoverlap(data, 32734)
 #'
 #' @import sf
 #' @import dplyr

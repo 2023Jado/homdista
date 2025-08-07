@@ -59,6 +59,12 @@ moveObject(file, Id_name, timestamp, crs_epsg)
 
 # Generates the polygons representing the yearly utilized areas
 homeyear(file, crs_epsg, Id_name, timestamp, perc, parh)
+
+# Compute the monthly utilized area overlaps
+homoverlap(data, crs_epsg)
+
+# Computes the yearly utilized area overlaps
+yearoverlap(data, crs_epsg)
 ```
 ## Arguments
 ```
