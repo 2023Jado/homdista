@@ -18,10 +18,14 @@ Imports:
     adehabitatHR,
     adehabitatLT,
     adehabitatMA,
+    anytime,
+    dplyr,
     ggplot2,
     lubridate,
     mapview,
     move,
+    purrr,
     sf,
     sp,
-    tidyr
+    tidyr,
+    units

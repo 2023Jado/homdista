@@ -1,4 +1,4 @@
-Home range utilization and traveled distance over time
+Habitat utilization over time
 ================
 
 - [homdista package](#homdista-package)
@@ -17,12 +17,13 @@ Home range utilization and traveled distance over time
 
 The homdista package is designed to analyze the movement patterns of
 objects, like animals, using recorded GPS coordinates. This toolkit
-offers various functions to compute home range areas and distances
-traveled over extended periods, daily, monthly and yearly. To determine
-home range, the package employs a kernel density estimator, requiring
-users to specify the bandwidth themselves. For distance estimation, the
-package utilizes the st_length function to link all points in
-chronological order based on their timestamps.
+offers various functions to compute home range areas, distances traveled
+over extended periods, daily, monthly and yearly, and analyzing the
+utilized area overlaps. To determine home range, the package employs a
+kernel density estimator, requiring users to specify the bandwidth
+themselves. For distance estimation, the package utilizes the st_length
+function to link all points in chronological order based on their
+timestamps.
 
 ## Installation
 
@@ -33,10 +34,8 @@ with:
 # install.packages("devtools")
 # If you don't have devtools installed, uncomment the line above to install it first
 library(devtools)
-# Sometimes you may need to install first "anytime" package before installing homdista
-# install.packages("anytime")
-# If you don't have the "anytime" package installed, uncomment the line above to install it first
-# Install the homdista package from GitHub
+
+# Install the homdista package
 devtools::install_github("2023Jado/homdista")
 ```
 

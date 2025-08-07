@@ -5,7 +5,7 @@
 #'
 #' Arguments
 #'
-#' @param adista a layer containing the area and distances values generated from the homdista function
+#' @param adista a layer containing the area and distances values generated from the `homdista` function
 #' @param cormethod correlation method between paired samples (pearson", "kendall", or "spearman")
 #'
 #' @return correlation values
