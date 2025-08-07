@@ -35,7 +35,7 @@ homoverlap <- function(data, crs_epsg){
       this_month <- this_group$Month
       this_year <- this_group$Year
       this_geom <- st_geometry(this_group)
-      this_area <- st_area(this_geom) %>% set_units("km^2") %>% drop_units()
+      this_area <- this_group$area_km2
 
       overlaps <- list()
       total_overlap_area <- 0
@@ -79,6 +79,7 @@ homoverlap <- function(data, crs_epsg){
       # Add total and unoverlapped to all rows
       overlaps_df <- bind_rows(overlaps) %>%
         mutate(
+          area_km2 = this_area,
           total_overlapped_area_km2 = total_overlap_area,
           unoverlapped_area_km2 = this_area - total_overlap_area
         ) %>%
