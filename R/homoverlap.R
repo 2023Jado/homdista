@@ -34,11 +34,11 @@ homoverlap <- function(data, crs_epsg){
       this_id <- this_group$Id
       this_month <- this_group$Month
       this_year <- this_group$Year
-      this_geom <- st_geometry(this_group)
       this_area <- this_group$area_km2
+      this_geom <- st_geometry(this_group)
 
       overlaps <- list()
-      total_overlap_area <- 0
+      overlap_geoms <- list()
 
       for (j in seq_len(nrow(time_data))) {
         if (i == j) next
@@ -46,12 +46,10 @@ homoverlap <- function(data, crs_epsg){
         other_id <- other_group$Id
         other_geom <- st_geometry(other_group)
 
-        # Try intersection
         inter <- tryCatch(st_intersection(this_geom, other_geom), error = function(e) NULL)
 
         if (!is.null(inter) && length(inter) > 0) {
           area_overlap <- st_area(inter) %>% set_units("km^2") %>% drop_units()
-          total_overlap_area <- total_overlap_area + area_overlap
 
           overlaps[[length(overlaps) + 1]] <- data.frame(
             Id = this_id,
@@ -61,11 +59,20 @@ homoverlap <- function(data, crs_epsg){
             overlapped_area_km2 = as.numeric(area_overlap),
             stringsAsFactors = FALSE
           )
+
+          overlap_geoms[[length(overlap_geoms) + 1]] <- inter
         }
       }
 
+      # Union all overlaps to avoid double-counting in total overlap area
+      if (length(overlap_geoms) > 0) {
+        overlap_union <- st_union(do.call(c, overlap_geoms))
+        total_overlap_area <- st_area(overlap_union) %>% set_units("km^2") %>% drop_units()
+      } else {
+        total_overlap_area <- 0
+      }
+
       if (length(overlaps) == 0) {
-        # No overlaps
         overlaps[[1]] <- data.frame(
           Id = this_id,
           Month = this_month,
@@ -76,12 +83,11 @@ homoverlap <- function(data, crs_epsg){
         )
       }
 
-      # Add total and unoverlapped to all rows
       overlaps_df <- bind_rows(overlaps) %>%
         mutate(
           area_km2 = this_area,
           total_overlapped_area_km2 = total_overlap_area,
-          unoverlapped_area_km2 = this_area - total_overlap_area
+          unoverlapped_area_km2 = area_km2 - total_overlap_area
         ) %>%
         bind_cols(geometry = this_geom)
 
