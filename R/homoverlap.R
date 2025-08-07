@@ -64,7 +64,7 @@ homoverlap <- function(data, crs_epsg){
         }
       }
 
-      # Union all overlaps to avoid double-counting in total overlap area
+      # Union all overlaps to avoid double-counting in total overlap areas
       if (length(overlap_geoms) > 0) {
         overlap_union <- st_union(do.call(c, overlap_geoms))
         total_overlap_area <- st_area(overlap_union) %>% set_units("km^2") %>% drop_units()
