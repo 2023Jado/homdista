@@ -1,51 +1,18 @@
-#' Data frame to Move object
-#' @author Jean de Dieu Tuyizere
+
+#' Summarizing monthly overlap statistics
 #'
-#' Converts the data frame into a move object for further movement analysis.
+#' @param filepoint
+#' @param filelap
+#' @param Id_name
+#' @param timestamp
+#' @param crs_epsg
 #'
-#' Arguments
-#'
-#' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
-#' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
-#' @param timestamp timestamp Column name from dataset which shows the time of the observation.
-#' @param crs_epsg the epsg code related to the dataset coordinates.
-#'
-#' @return move object
+#' @return
 #' @export
 #'
 #' @examples
-#'
-#' file_path <- system.file("extdata", "data.csv", package = "homdista")
-#' file <- read.csv(file_path, header=T)
-#'
-#' # Define parameters
-#' timestamp <- "timestamp"
-#' Id_name <- "Animal"
-#' crs_epsg <- 32734
-#' perc <- 95
-#'
-#'
-#' library(homdista)
-#' #Additional libraries for plotting
-#' library(sp)
-#' library(sf)
-#' library(mapview)
-#'
-#' #Make the move object from data frame
-#' Move <- moveObject(file, Id_name, timestamp, crs_epsg)
-#' plot(Move)
-#' mapview(Move)
-#' @import sp
-#' @import sf
-#' @import lubridate
-#' @import move
-#' @import dplyr
-#' @import anytime
-
-moveObject <- function(file, Id_name, timestamp, crs_epsg){
-  # Read the csv data
-
-  data_df <- file
+summoverlap <- function(filepoint, filelap, Id_name, timestamp, crs_epsg){
+  data_df <- filepoint
   names(data_df)[which(names(data_df) == Id_name)] <- "groupid"
   names(data_df)[which(names(data_df) == timestamp)] <- "timestamp"
 
@@ -98,7 +65,7 @@ moveObject <- function(file, Id_name, timestamp, crs_epsg){
       sample_success_rate <- sum(!is.na(test_sample)) / length(sample_timestamps)
 
       if (sample_success_rate > 0.8) {
-        # Apply the successful format to ALL timestamp data
+        # Apply the successful format to Aall timestamp data
         parsed_time <- suppressWarnings(as.POSIXct(timestamp_raw, format = fmt, tz = "UTC"))
         full_success_rate <- sum(!is.na(parsed_time)) / length(timestamp_raw)
 
@@ -144,36 +111,56 @@ moveObject <- function(file, Id_name, timestamp, crs_epsg){
   # Sort the dataset based on the timestamp column
   no_na_df_sorted <- data_df_no_na[order(data_df_no_na$time), ]
 
-  # Identify duplicate timestamps
-  duplicate_indices <- duplicated(no_na_df_sorted$time) |
-    duplicated(no_na_df_sorted$time, fromLast = TRUE)
-
-  # Remove duplicate timestamps
-  no_na_data_unique <- no_na_df_sorted[!duplicate_indices, ]
-
   # Create a "code name" column to be used for home range estimation
-  no_na_data_unique$Month_code <- month(no_na_data_unique$time)
-  no_na_data_unique$Year_code <- year(no_na_data_unique$time)
-  no_na_data_unique$Code <- paste(no_na_data_unique$Month_code, no_na_data_unique$Year_code, no_na_data_unique$groupid)
+  no_na_df_sorted$Day_code <- day(no_na_df_sorted$time)
+  no_na_df_sorted$Month_code <- month(no_na_df_sorted$time)
+  no_na_df_sorted$Year_code <- year(no_na_df_sorted$time)
 
-  # Create move object with sorted dataset
-  df_move <- move(
-    x = no_na_data_unique$x,
-    y = no_na_data_unique$y,
-    time = as.POSIXct(no_na_data_unique$time, format = tf, tz = "UTC"),
-    data = no_na_data_unique,
-    Id = na_na_data_unique$groupid,
-    group = no_na_data_unique$Code,
-    crs = crs_epsg
-  )
+  # Change the data frame to "sf" object
+  df_move <- st_as_sf(no_na_df_sorted, coords = c("x", "y"), crs=crs_epsg)
 
-  ######## Change the projection ###########
-  # Create a CRS object using the EPSG code
-  crs_object <- CRS(paste0("+init=epsg:", crs_epsg))
 
-  # Set the proj4string attribute of df_move to the CRS object
-  proj4string(df_move) <- crs_object
+  overlapp <- filelap
 
-  return(df_move)
+  ovr_real <- overlapp %>%
+    dplyr::filter(overlapped_with != "unoverlapped")
 
+  # Group and union overlap polygons per Id-Month-Year
+  ovr_grouped <- ovr_real %>%
+    dplyr::group_by(Id, Month, Year) %>%
+    dplyr::summarise(
+      geometry = sf::st_union(geometry),
+      area_km2 = dplyr::first(area_km2),
+      total_overlapped_area_km2 = dplyr::first(total_overlapped_area_km2),
+      unoverlapped_area_km2 = dplyr::first(unoverlapped_area_km2),
+      .groups = "drop"
+    )
+
+  # Count number of unique overlap partners per Id-Month-Year
+  overlaps_count <- ovr_real %>%
+    sf::st_drop_geometry() %>%
+    dplyr::distinct(Id, Month, Year, overlapped_with) %>%
+    dplyr::count(Id, Month, Year, name = "n_overlaps")
+
+  # Count unique days with points inside overlap polygons
+  count_days_for_id <- function(id, month, year, poly_geom) {
+    df_move %>%
+      dplyr::filter(groupid == id, Month_code == month, Year_code == year) %>%
+      sf::st_filter(poly_geom, .predicate = sf::st_within) %>%
+      dplyr::mutate(date_only = as.Date(time)) %>%
+      dplyr::distinct(date_only) %>%
+      nrow()
+  }
+
+  # Apply day counting for each overlap polygon
+  n_days_df <- ovr_grouped %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(n_days = count_days_for_id(Id, Month, Year, geometry)) %>%
+    dplyr::ungroup()
+
+  # Merge with overlaps count
+  result <- n_days_df %>%
+    dplyr::left_join(overlaps_count, by = c("Id", "Month", "Year"))
+
+  return(result)
 }

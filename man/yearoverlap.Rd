@@ -19,7 +19,7 @@ Computing home range overlap among different animal individuals, groups, etc.
 }
 \examples{
 data <- homekde(file, crs_epsg, Id_name, timestamp, perc, parh)
-homeoverlap <- homoverlap(data, crs_epsg)
+homeoverlap <- yearoverlap(data, 32734)
 
 }
 \author{
