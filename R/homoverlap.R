@@ -25,7 +25,6 @@ homoverlap <- function(data, crs_epsg){
   # Split by time period
   by_time <- split(habitat_sf, paste(habitat_sf$Year, habitat_sf$Month, sep = "-"))
 
-  # Function to compute overlap information
   compute_overlap <- function(time_data) {
     result <- list()
 
@@ -64,37 +63,61 @@ homoverlap <- function(data, crs_epsg){
         }
       }
 
-      # Union all overlaps to avoid double-counting in total overlap areas
+      # Geometry for overlapped part
       if (length(overlap_geoms) > 0) {
         overlap_union <- st_union(do.call(c, overlap_geoms))
         total_overlap_area <- st_area(overlap_union) %>% set_units("km^2") %>% drop_units()
-      } else {
-        total_overlap_area <- 0
-      }
 
-      if (length(overlaps) == 0) {
-        overlaps[[1]] <- data.frame(
+        # Add overlapped geometry record
+        overlaps_df <- bind_rows(overlaps) %>%
+          mutate(
+            area_km2 = this_area,
+            total_overlapped_area_km2 = total_overlap_area
+          ) %>%
+          st_as_sf(sf_column_name = "geometry") %>%
+          mutate(geometry = overlap_union)
+
+        # Compute unoverlapped geometry
+        unoverlapped_geom <- st_difference(this_geom, overlap_union)
+        if (!st_is_empty(unoverlapped_geom)) {
+          unoverlap_df <- data.frame(
+            Id = this_id,
+            Month = this_month,
+            Year = this_year,
+            overlapped_with = "unoverlapped",
+            overlapped_area_km2 = 0,
+            area_km2 = this_area,
+            total_overlapped_area_km2 = total_overlap_area,
+            unoverlapped_area_km2 = as.numeric(st_area(unoverlapped_geom) %>% set_units("km^2") %>% drop_units()),
+            stringsAsFactors = FALSE
+          ) %>%
+            st_as_sf(sf_column_name = "geometry") %>%
+            mutate(geometry = unoverlapped_geom)
+
+          overlaps_df <- bind_rows(overlaps_df, unoverlap_df)
+        }
+
+      } else {
+        # No overlap at all — keep full geometry as unoverlapped
+        overlaps_df <- data.frame(
           Id = this_id,
           Month = this_month,
           Year = this_year,
-          overlapped_with = "no overlap",
+          overlapped_with = "unoverlapped",
           overlapped_area_km2 = 0,
-          stringsAsFactors = FALSE
-        )
-      }
-
-      overlaps_df <- bind_rows(overlaps) %>%
-        mutate(
           area_km2 = this_area,
-          total_overlapped_area_km2 = total_overlap_area,
-          unoverlapped_area_km2 = area_km2 - total_overlap_area
+          total_overlapped_area_km2 = 0,
+          unoverlapped_area_km2 = this_area,
+          stringsAsFactors = FALSE
         ) %>%
-        bind_cols(geometry = this_geom)
+          st_as_sf(sf_column_name = "geometry") %>%
+          mutate(geometry = this_geom)
+      }
 
       result[[i]] <- overlaps_df
     }
 
-    st_as_sf(bind_rows(result))
+    do.call(rbind, result)
   }
 
   # Apply per time period
