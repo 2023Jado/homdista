@@ -5,8 +5,8 @@
 #'
 #' Arguments
 #'
-#' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
-#' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
+#' @param file dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column.
+#' @param Id_name column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
 #' @param timestamp timestamp Column name from dataset which shows the time of the observation.
 #' @param crs_epsg the epsg code related to the dataset coordinates.
 #'

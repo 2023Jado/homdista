@@ -7,13 +7,13 @@
 daytraj(file, Id_name, timestamp, crs_epsg)
 }
 \arguments{
-\item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
-
-\item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
+\item{Id_name}{column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
 
 \item{timestamp}{timestamp Column name from dataset which shows the time of the observation.}
 
 \item{crs_epsg}{the epsg code related to the dataset coordinates.}
+
+\item{filedataframe}{which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column.}
 }
 \value{
 Daily movement paths

@@ -1,18 +1,27 @@
 
 #' Summarizing monthly overlap statistics
 #'
-#' @param filepoint
-#' @param filelap
-#' @param Id_name
-#' @param timestamp
-#' @param crs_epsg
+#' @param file dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column.
+#' @param filelap this refers to the output of the `homoverlap` function, which contains the overlap polygons and their attributes.
+#' @param Id_name column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...)).
+#' @param timestamp column name from filepoint which shows the time of the point (e.g., "timestamp", "time", "date", ...).
+#' @param crs_epsg the epsg code related to the dataset coordinates.
 #'
-#' @return
+#' @return A layer summarizing the overlap statistics that can be visualized also in GIS software.
 #' @export
 #'
 #' @examples
-summoverlap <- function(filepoint, filelap, Id_name, timestamp, crs_epsg){
-  data_df <- filepoint
+#' overlapp <- homoverlap(data, 32734)
+#' summary_overlaps <- summoverlap(file, overlapp, "Animal", "timestamp", 37234)
+#'
+#' @import sf
+#' @import dplyr
+#' @import lubridate
+#' @import anytime
+
+
+summoverlap <- function(file, filelap, Id_name, timestamp, crs_epsg){
+  data_df <- file
   names(data_df)[which(names(data_df) == Id_name)] <- "groupid"
   names(data_df)[which(names(data_df) == timestamp)] <- "timestamp"
 

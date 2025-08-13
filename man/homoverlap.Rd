@@ -2,20 +2,20 @@
 % Please edit documentation in R/homoverlap.R
 \name{homoverlap}
 \alias{homoverlap}
-\title{Computing home range overlap among different animal individuals, groups, etc.}
+\title{Computing monthly home range overlap among different animal individuals, groups, etc.}
 \usage{
 homoverlap(data, crs_epsg)
 }
 \arguments{
-\item{data}{This refers to the result data from the \code{homekde} function.}
+\item{data}{this refers to the result data from the \code{homekde} function.}
 
-\item{epsg_crs}{This is the EPSG code for the coordinate reference system (CRS) to be used for the analysis.}
+\item{epsg_crs}{this is the EPSG code for the coordinate reference system (CRS) to be used for the analysis.}
 }
 \value{
 A layer whith the overlap information for each individual, group, etc. This can be also visualized in GIS software.
 }
 \description{
-Computing home range overlap among different animal individuals, groups, etc.
+Computing monthly home range overlap among different animal individuals, groups, etc.
 }
 \examples{
 data <- homekde(file, crs_epsg, Id_name, timestamp, perc, parh)

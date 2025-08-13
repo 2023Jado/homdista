@@ -68,10 +68,15 @@ devtools::install_github("2023Jado/homdista")
     # Computes the yearly utilized area overlaps
     yearoverlap(data, crs_epsg)
 
+    # Summarizing the monthly overlaps
+    summoverlap(file, filelap, Id_name, timestamp, crs_epsg)
+
+    # Summarizing the yearly overlaps
+    sumyoverlap(file, filelap, Id_name, timestamp, crs_epsg)
+
 ## Arguments
 
-    file          R-imported dataframe which comprises at least three columns: a longitude column labeled "x", 
-                  a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
+    file          dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column., 
 
     timestamp     timestamp Column name from dataset which shows the time of the observation.
 
@@ -89,6 +94,10 @@ devtools::install_github("2023Jado/homdista")
 
     cormethod     Correlation method between paired samples (pearson", "kendall", or "spearman") at 
                   confidence level of 95%.
+                  
+    data          When computing the monthly home range overlaps, this refers to the output of the `homoverlap` function. For yearly home range overlaps, the computation refers to the output of the `yearoverlap` function. 
+
+    filelap       When summarizing the monthly home range overlaps, this refers to the output of the `homoverlap` function, which contains the overlap polygons and their attributes. For yearly overlaps, the summary is based on the output of the `yearoverlap` functions.   
 
 ## Example
 

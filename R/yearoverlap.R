@@ -1,8 +1,8 @@
-#' Computing home range overlap among different animal individuals, groups, etc.
+#' Computing yearly home range overlap among different animal individuals, groups, etc.
 #' @author Jean de Dieu Tuyizere
 #'
-#' @param data This refers to the result data from the `homeyear` function.
-#' @param epsg_crs This is the EPSG code for the coordinate reference system (CRS) to be used for the analysis.
+#' @param data this refers to the result data from the `homeyear` function.
+#' @param epsg_crs this is the EPSG code for the coordinate reference system (CRS) to be used for the analysis.
 #'
 #' @return A layer whith the overlap information for each individual, group, etc. This can be also visualized in GIS software.
 #' @export

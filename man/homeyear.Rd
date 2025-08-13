@@ -7,17 +7,17 @@
 homeyear(file, crs_epsg, Id_name, timestamp, perc, parh)
 }
 \arguments{
-\item{file}{R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.}
+\item{file}{dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column.}
 
-\item{crs_epsg}{the epsg code related to the dataset coordinates}
+\item{crs_epsg}{the epsg code related to the dataset coordinates.}
 
-\item{Id_name}{Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))}
+\item{Id_name}{column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...)).}
 
 \item{timestamp}{timestamp Column name from dataset which shows the time of the observation.}
 
-\item{perc}{The percentage utilized to calculate the KDE home range at a specific level (e.g., 50\% for core areas, 75\%, 90\%, 95\%, ...).}
+\item{perc}{the percentage utilized to calculate the KDE home range at a specific level (e.g., 50\% for core areas, 75\%, 90\%, 95\%, ...).}
 
-\item{parh}{bandwidth or smoothing parameter}
+\item{parh}{bandwidth or smoothing parameter.}
 }
 \value{
 home range polygons

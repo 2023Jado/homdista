@@ -7,9 +7,9 @@
 hodicor(adista, cormethod)
 }
 \arguments{
-\item{adista}{a layer containing the area and distances values generated from the \code{homdista} function}
+\item{adista}{a layer containing the area and distances values generated from the \code{homdista} function.}
 
-\item{cormethod}{correlation method between paired samples (pearson", "kendall", or "spearman")}
+\item{cormethod}{correlation method between paired samples (pearson", "kendall", or "spearman").}
 }
 \value{
 correlation values

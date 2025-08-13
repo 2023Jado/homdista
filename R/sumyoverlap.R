@@ -1,64 +1,26 @@
-#' Yearly home range spatial polygons
-#' @author Jean de Dieu Tuyizere
-#'
-#' Estimate the utilized home range size for each group/individual/etc..
-#'
-#' Arguments
+
+#' Summarizing yearly overlap statistics
 #'
 #' @param file dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column.
-#' @param crs_epsg the epsg code related to the dataset coordinates.
+#' @param filelap this refers to the output of the `yearoverlap` function, which contains the overlap polygons and their attributes.
 #' @param Id_name column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...)).
-#' @param timestamp timestamp Column name from dataset which shows the time of the observation.
-#' @param perc the percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for core areas, 75%, 90%, 95%, ...).
-#' @param parh bandwidth or smoothing parameter.
+#' @param timestamp column name from filepoint which shows the time of the point (e.g., "timestamp", "time", "date", ...).
+#' @param crs_epsg the epsg code related to the dataset coordinates.
 #'
-#' @return home range polygons
+#' @return A layer summarizing the overlap statistics that can be visualized also in GIS software.
 #' @export
 #'
 #' @examples
-#' file_path <- system.file("extdata", "data.csv", package = "homdista")
-#' file <- read.csv(file_path, header=T)
+#' overlapp <- homoverlap(data, 32734)
+#' summary_overlaps <- sumyoverlap(file, overlapp, "Animal", "timestamp", 37234)
 #'
-#' # Define parameters
-#' timestamp <- "timestamp"
-#' Id_name <- "Animal"
-#' crs_epsg <- 32734
-#' perc <- 95
-#' parh <- 500
-#'
-#' library(homdista)
-#' #Additional libraries
-#' library(sf)
-#' library(mapview)
-#'
-#' # Yearly home range spatial polygons
-#' homerange <- homeyear(file, crs_epsg, Id_name, timestamp, perc, parh)
-#' homerange
-#'
-#' # Convert "sp" object to "sf"
-#' homerange_sf <- st_as_sf(homerange)
-#'
-#'  plot(homerange_sf)
-#'
-#' # Define a palette for colors
-#' palette <- rainbow(length(unique(homerange_sf$Id)))
-#'
-#' #Create map with mapview
-#' mapview(homerange_sf, zcol = "Id", col.regions = palette, legend = TRUE, legend.title = "", legend.values = unique(homerange_sf$Id))
-#' @import sp
 #' @import sf
-#' @import ade4
-#' @import adehabitatMA
-#' @import adehabitatLT
-#' @import adehabitatHR
-#' @import lubridate
-#' @import mapview
-#' @import tidyr
 #' @import dplyr
+#' @import lubridate
 #' @import anytime
 
-homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
 
+sumyoverlap <- function(file, filelap, Id_name, timestamp, crs_epsg){
   data_df <- file
   names(data_df)[which(names(data_df) == Id_name)] <- "groupid"
   names(data_df)[which(names(data_df) == timestamp)] <- "timestamp"
@@ -112,7 +74,7 @@ homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
       sample_success_rate <- sum(!is.na(test_sample)) / length(sample_timestamps)
 
       if (sample_success_rate > 0.8) {
-        # Apply the successful format to ALL timestamp data
+        # Apply the successful format to Aall timestamp data
         parsed_time <- suppressWarnings(as.POSIXct(timestamp_raw, format = fmt, tz = "UTC"))
         full_success_rate <- sum(!is.na(parsed_time)) / length(timestamp_raw)
 
@@ -142,7 +104,7 @@ homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
     }
   }
 
-  # Final check - ensure we have successfully parsed timestamps
+  # Ensure successfully parsed timestamps
   final_success_rate <- sum(!is.na(parsed_time)) / length(parsed_time)
   if (final_success_rate <= 0.8) {
     stop(paste("Timestamp parsing failed. Only",
@@ -159,98 +121,55 @@ homeyear <- function(file, crs_epsg, Id_name, timestamp, perc, parh){
   no_na_df_sorted <- data_df_no_na[order(data_df_no_na$time), ]
 
   # Create a "code name" column to be used for home range estimation
+  no_na_df_sorted$Day_code <- day(no_na_df_sorted$time)
+  no_na_df_sorted$Month_code <- month(no_na_df_sorted$time)
   no_na_df_sorted$Year_code <- year(no_na_df_sorted$time)
-  no_na_df_sorted$Code <- paste(no_na_df_sorted$Year_code, no_na_df_sorted$groupid)
 
   # Change the data frame to "sf" object
   df_move <- st_as_sf(no_na_df_sorted, coords = c("x", "y"), crs=crs_epsg)
 
-  ############################ Calculations of home range ##################################################
 
-  # Initialize an empty list to store KDE results
-  kde_list <- list()
+  overlapp <- filelap
 
-  # Loop through each unique "code name"
-  for (name in unique(df_move$Code)) {
+  ovr_real <- overlapp %>%
+    dplyr::filter(overlapped_with != "unoverlapped")
 
-    # Subset the data for the current code name
-    subset_data <- df_move[df_move$Code == name, ]
+  # Group and union overlap polygons per Id-Year
+  ovr_grouped <- ovr_real %>%
+    dplyr::group_by(Id, Year) %>%
+    dplyr::summarise(
+      geometry = sf::st_union(geometry),
+      area_km2 = dplyr::first(area_km2),
+      total_overlapped_area_km2 = dplyr::first(total_overlapped_area_km2),
+      unoverlapped_area_km2 = dplyr::first(unoverlapped_area_km2),
+      .groups = "drop"
+    )
 
-    # Check the number of relocations
-    num_relocations <- nrow(subset_data)
+  # Count number of unique overlap partners per Id-Year
+  overlaps_count <- ovr_real %>%
+    sf::st_drop_geometry() %>%
+    dplyr::distinct(Id, Year, overlapped_with) %>%
+    dplyr::count(Id, Month, Year, name = "n_overlaps")
 
-    # Proceed if there are at least 5 relocations
-    if (num_relocations >= 5) {
-
-      # Convert subset_data to SpatialPointsDataFrame
-      subset_sp <- st_as_sf(subset_data, coords = c("x", "y"))
-
-      # Convert subset_sp to SpatialPoints object
-      subset_sp_points <- as(subset_sp, "Spatial")
-
-      # Calculate kernel UD
-      kde <- kernelUD(subset_sp_points, h = parh)
-      kde_list[[name]] <- kde
-    } else {
-      cat("Deleting KDE result for", name, "due to fewer than 5 relocations.\n")
-
-      # Delete this subset from the list
-      kde_list[[name]] <- NULL
-    }
+  # Count unique days with points inside overlap polygons
+  count_days_for_id <- function(id, year, poly_geom) {
+    df_move %>%
+      dplyr::filter(groupid == id, Year_code == year) %>%
+      sf::st_filter(poly_geom, .predicate = sf::st_within) %>%
+      dplyr::mutate(date_only = as.Date(time)) %>%
+      dplyr::distinct(date_only) %>%
+      nrow()
   }
 
-  # Get the vertices
-  # Function to extract vertices for each "code" name stored in kde_list
-  get_vertices <- function(kde) {
+  # Apply day counting for each overlap polygon
+  n_days_df <- ovr_grouped %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(n_days = count_days_for_id(Id, Year, geometry)) %>%
+    dplyr::ungroup()
 
-    # Extract vertices accounting for a certain percentage of the kernel density in an area unit
-    code_name <- tryCatch({
-      getverticeshr(kde, percent = perc, unout = "km2")
-    }, error = function(e) {
-      return(NULL)  # Return NULL if calculation fails
-    })
-    return(code_name)
-  }
+  # Merge with overlaps count
+  result <- n_days_df %>%
+    dplyr::left_join(overlaps_count, by = c("Id", "Year"))
 
-  # Create a list to store vertices for each "code" name stored in kde_list
-  vertices_list <- list()
-
-  # Iterate over each KDE object and extract vertices for each "code" name
-  for (name in names(kde_list)) {
-    vertices <- get_vertices(kde_list[[name]])
-    if (!is.null(vertices)) {
-      # Add code name column to vertices data frame
-      vertices$Code <- name
-      vertices_list[[name]] <- vertices
-    }
-  }
-
-  # Combine all vertices into a single data frame
-  # First of all, filter out NULL elements from vertices_list
-  vertices_list_filtered <- vertices_list[!sapply(vertices_list, is.null)]
-
-  # Check if the filtered list is not empty
-  if (length(vertices_list_filtered) == 0) {
-    stop("Error: vertices_list does not contain valid elements.")
-  } else {
-    # Second, create SpatialPolygons (all combined together)
-    home <- do.call(rbind, vertices_list_filtered)
-  }
-
-
-  # Homerange as data frame
-  home1 <- as.data.frame(home)
-  home2 <- home1[, c("Code", "area")]
-
-  home3 <- tidyr::separate(home2, Code, into = c("Year", "Id"), sep = " ")
-  names(home3) <- c("Year", "Id", "area_km2")
-
-  # Convert back to SpatialPolygonsDataFrame
-
-  homeshape <- SpatialPolygonsDataFrame(home, home3)
-
-  # changing to sf object
-  homeshape <- st_as_sf(homeshape)
-
-  return(homeshape)
+  return(result)
 }

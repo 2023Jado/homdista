@@ -5,12 +5,12 @@
 #'
 #' Arguments
 #'
-#' @param file R-imported dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", and a timestamp column labeled "timestamp", in lowercase.
-#' @param crs_epsg the epsg code related to the dataset coordinates
-#' @param Id_name Column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...))
+#' @param file dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column.
+#' @param crs_epsg the epsg code related to the dataset coordinates.
+#' @param Id_name column name from dataset which shows different categories (e.g., different groups (group A, group B, group C, ...)).
 #' @param timestamp timestamp Column name from dataset which shows the time of the observation.
-#' @param perc The percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for core areas, 75%, 90%, 95%, ...).
-#' @param parh bandwidth or smoothing parameter
+#' @param perc the percentage utilized to calculate the KDE home range at a specific level (e.g., 50% for core areas, 75%, 90%, 95%, ...).
+#' @param parh bandwidth or smoothing parameter.
 #'
 #' @return home range polygons
 #' @export
