@@ -149,7 +149,7 @@ sumyoverlap <- function(file, filelap, Id_name, timestamp, crs_epsg){
   overlaps_count <- ovr_real %>%
     sf::st_drop_geometry() %>%
     dplyr::distinct(Id, Year, overlapped_with) %>%
-    dplyr::count(Id, Month, Year, name = "n_overlaps")
+    dplyr::count(Id, Year, name = "n_overlaps")
 
   # Count unique days with points inside overlap polygons
   count_days_for_id <- function(id, year, poly_geom) {
