@@ -1,5 +1,6 @@
 
 #' Summarizing monthly overlap statistics
+#' @author Jean de Dieu Tuyizere
 #'
 #' @param file dataframe which comprises at least three columns: a longitude column labeled "x", a latitude column labeled "y", in lowercase, and a timestamp column.
 #' @param filelap this refers to the output of the `homoverlap` function, which contains the overlap polygons and their attributes.

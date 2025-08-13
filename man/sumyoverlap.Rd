@@ -28,3 +28,6 @@ overlapp <- homoverlap(data, 32734)
 summary_overlaps <- sumyoverlap(file, overlapp, "Animal", "timestamp", 37234)
 
 }
+\author{
+Jean de Dieu Tuyizere
+}
